@@ -38,6 +38,15 @@ func TestScanner_Scan(t *testing.T) {
 				{token: EOF},
 			},
 		},
+		{
+			input: "- perl",
+			results: []result{
+				{token: UNORDERED_LIST, literal: "-"},
+				{token: WS, literal: " "},
+				{token: PARAGRAPH, literal: "perl"},
+				{token: EOF},
+			},
+		},
 	}
 
 	for _, expect := range expectations {

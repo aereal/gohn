@@ -14,10 +14,13 @@ type Token int
 const (
 	ILLEGAL Token = iota
 	EOF
+	WS
 	PARAGRAPH
+	UNORDERED_LIST
 )
 
 const eof = rune(0)
+const tUnorderedList rune = '-'
 
 type Scanner struct {
 	input *bufio.Reader
@@ -32,10 +35,15 @@ func (s *Scanner) Scan() (token Token, literal string) {
 	switch c {
 	case eof:
 		return EOF, ""
+	case tUnorderedList:
+		return UNORDERED_LIST, string(tUnorderedList)
 	}
 	if unicode.IsLetter(c) {
 		s.unread()
 		return s.scanParagraph()
+	} else if unicode.IsSpace(c) {
+		s.unread()
+		return s.scanWhitespace()
 	}
 	return ILLEGAL, string(c)
 }
@@ -56,6 +64,24 @@ func (s *Scanner) scanParagraph() (token Token, literal string) {
 	}
 
 	return PARAGRAPH, buf.String()
+}
+
+func (s *Scanner) scanWhitespace() (token Token, literal string) {
+	var buf bytes.Buffer
+	buf.WriteRune(s.read())
+
+	for {
+		if c := s.read(); c == eof {
+			break
+		} else if !unicode.IsSpace(c) {
+			s.unread()
+			break
+		} else {
+			_, _ = buf.WriteRune(c)
+		}
+	}
+
+	return WS, buf.String()
 }
 
 func (s *Scanner) read() rune {
