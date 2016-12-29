@@ -19,11 +19,20 @@ const (
 	UNORDERED_LIST
 )
 
+type NodeContext int
+
+const (
+	cRoot NodeContext = iota
+	cParagraph
+	cUnorderedList
+)
+
 const eof = rune(0)
 const tUnorderedList rune = '-'
 
 type Scanner struct {
-	input *bufio.Reader
+	input   *bufio.Reader
+	context NodeContext
 }
 
 func NewScanner(i io.Reader) *Scanner {
@@ -36,11 +45,17 @@ func (s *Scanner) Scan() (token Token, literal string) {
 	case eof:
 		return EOF, ""
 	case tUnorderedList:
+		s.context = cUnorderedList
 		return UNORDERED_LIST, string(tUnorderedList)
 	}
 	if unicode.IsLetter(c) {
-		s.unread()
-		return s.scanParagraph()
+		if s.context == cUnorderedList {
+			s.unread()
+			return s.scanLine()
+		} else {
+			s.unread()
+			return s.scanParagraph()
+		}
 	} else if unicode.IsSpace(c) {
 		s.unread()
 		return s.scanWhitespace()
@@ -82,6 +97,24 @@ func (s *Scanner) scanWhitespace() (token Token, literal string) {
 	}
 
 	return WS, buf.String()
+}
+
+func (s *Scanner) scanLine() (token Token, literal string) {
+	var buf bytes.Buffer
+	buf.WriteRune(s.read())
+
+	for {
+		if c := s.read(); c == eof {
+			break
+		} else if c == '\n' {
+			s.unread()
+			break
+		} else {
+			_, _ = buf.WriteRune(c)
+		}
+	}
+
+	return PARAGRAPH, buf.String()
 }
 
 func (s *Scanner) read() rune {
