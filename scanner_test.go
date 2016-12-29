@@ -53,6 +53,19 @@ func TestScanner_Scan(t *testing.T) {
 				{token: EOF},
 			},
 		},
+		{
+			input: "+ start\n+ done",
+			results: []result{
+				{token: ORDERED_LIST, literal: "+"},
+				{token: WS, literal: " "},
+				{token: PARAGRAPH, literal: "start"},
+				{token: WS, literal: "\n"},
+				{token: ORDERED_LIST, literal: "+"},
+				{token: WS, literal: " "},
+				{token: PARAGRAPH, literal: "done"},
+				{token: EOF},
+			},
+		},
 	}
 
 	for _, expect := range expectations {
