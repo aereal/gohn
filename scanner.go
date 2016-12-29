@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"io"
 	"unicode"
+	"unicode/utf8"
 )
 
 // from https://github.com/benbjohnson/sql-parser/blob/master/scanner.go
@@ -107,6 +108,10 @@ func (s *Scanner) scanLine() (token Token, literal string) {
 		if c := s.read(); c == eof {
 			break
 		} else if c == '\n' {
+			nextBytes, _ := s.input.Peek(1)
+			if r, _ := utf8.DecodeRune(nextBytes); r != tUnorderedList {
+				s.context = cRoot
+			}
 			s.unread()
 			break
 		} else {

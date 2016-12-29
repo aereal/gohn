@@ -39,7 +39,7 @@ func TestScanner_Scan(t *testing.T) {
 			},
 		},
 		{
-			input: "- perl\n- ruby",
+			input: "- perl\n- ruby\nparagraph\nparagraph",
 			results: []result{
 				{token: UNORDERED_LIST, literal: "-"},
 				{token: WS, literal: " "},
@@ -48,6 +48,8 @@ func TestScanner_Scan(t *testing.T) {
 				{token: UNORDERED_LIST, literal: "-"},
 				{token: WS, literal: " "},
 				{token: PARAGRAPH, literal: "ruby"},
+				{token: WS, literal: "\n"},
+				{token: PARAGRAPH, literal: "paragraph\nparagraph"},
 				{token: EOF},
 			},
 		},
