@@ -1,0 +1,3 @@
+# go-text-hatena
+
+(TBD)
