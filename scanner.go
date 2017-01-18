@@ -16,7 +16,7 @@ const (
 	ILLEGAL Token = iota
 	EOF
 	WS
-	PARAGRAPH
+	TEXT
 	UNORDERED_LIST
 	ORDERED_LIST
 )
@@ -85,7 +85,7 @@ func (s *Scanner) scanParagraph() (token Token, literal string) {
 		}
 	}
 
-	return PARAGRAPH, buf.String()
+	return TEXT, buf.String()
 }
 
 func (s *Scanner) scanWhitespace() (token Token, literal string) {
@@ -125,7 +125,7 @@ func (s *Scanner) scanLine() (token Token, literal string) {
 		}
 	}
 
-	return PARAGRAPH, buf.String()
+	return TEXT, buf.String()
 }
 
 func (s *Scanner) read() rune {

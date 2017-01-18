@@ -27,14 +27,14 @@ func TestScanner_Scan(t *testing.T) {
 		{
 			input: "hello",
 			results: []result{
-				{token: PARAGRAPH, literal: "hello"},
+				{token: TEXT, literal: "hello"},
 				{token: EOF},
 			},
 		},
 		{
 			input: "hello\nworld",
 			results: []result{
-				{token: PARAGRAPH, literal: "hello\nworld"},
+				{token: TEXT, literal: "hello\nworld"},
 				{token: EOF},
 			},
 		},
@@ -43,13 +43,13 @@ func TestScanner_Scan(t *testing.T) {
 			results: []result{
 				{token: UNORDERED_LIST, literal: "-"},
 				{token: WS, literal: " "},
-				{token: PARAGRAPH, literal: "perl"},
+				{token: TEXT, literal: "perl"},
 				{token: WS, literal: "\n"},
 				{token: UNORDERED_LIST, literal: "-"},
 				{token: WS, literal: " "},
-				{token: PARAGRAPH, literal: "ruby"},
+				{token: TEXT, literal: "ruby"},
 				{token: WS, literal: "\n"},
-				{token: PARAGRAPH, literal: "paragraph\nparagraph"},
+				{token: TEXT, literal: "paragraph\nparagraph"},
 				{token: EOF},
 			},
 		},
@@ -58,11 +58,11 @@ func TestScanner_Scan(t *testing.T) {
 			results: []result{
 				{token: ORDERED_LIST, literal: "+"},
 				{token: WS, literal: " "},
-				{token: PARAGRAPH, literal: "start"},
+				{token: TEXT, literal: "start"},
 				{token: WS, literal: "\n"},
 				{token: ORDERED_LIST, literal: "+"},
 				{token: WS, literal: " "},
-				{token: PARAGRAPH, literal: "done"},
+				{token: TEXT, literal: "done"},
 				{token: EOF},
 			},
 		},
