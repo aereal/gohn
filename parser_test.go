@@ -31,6 +31,19 @@ func TestParser_Parse(t *testing.T) {
 				Line{text: "b"},
 			},
 		},
+		{
+			input: "- a\n- b\na\nb",
+			result: []Block{
+				UnorderedList{
+					items: []UnorderedListItem{
+						UnorderedListItem{text: "a"},
+						UnorderedListItem{text: "b"},
+					},
+				},
+				Line{text: "a"},
+				Line{text: "b"},
+			},
+		},
 	}
 
 	for i, expect := range expectations {
