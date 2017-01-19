@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io"
 	"text/scanner"
 )
@@ -58,7 +57,6 @@ func (l *Lexer) Lex(lval *yySymType) int {
 		token = symbolTables[s]
 	}
 	lval.token = Token{token: token, literal: s}
-	fmt.Printf("%#v\n", lval.token)
 	return token
 }
 
