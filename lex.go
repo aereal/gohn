@@ -12,6 +12,10 @@ var symbolTables = map[string]int{
 
 type Expr interface{}
 
+type UnorderedListExpr struct {
+	items []UnorderedListItemExpr
+}
+
 type UnorderedListItemExpr struct {
 	text string
 }

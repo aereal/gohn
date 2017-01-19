@@ -11,8 +11,7 @@ package main
 
 %token<token> TEXT
 %token UNORDERED_LIST_MARKER
-%type<exprs> unordered_list
-%type<expr> document unordered_list_item
+%type<expr> document unordered_list_item unordered_list
 
 %%
 
@@ -26,11 +25,13 @@ document:
 unordered_list:
               unordered_list_item
               {
-                $$ = []Expr{$1}
+                $$ = UnorderedListExpr{items: []UnorderedListItemExpr{$1.(UnorderedListItemExpr)}}
               }
               | unordered_list_item unordered_list
               {
-                $$ = append([]Expr{$1}, $2...)
+                items := $2.(UnorderedListExpr).items
+                list := UnorderedListExpr{items: append([]UnorderedListItemExpr{$1.(UnorderedListItemExpr)}, items...)}
+                $$ = list
               }
 
 unordered_list_item:

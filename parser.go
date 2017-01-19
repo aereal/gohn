@@ -28,7 +28,7 @@ const yyEofCode = 1
 const yyErrCode = 2
 const yyInitialStackSize = 16
 
-//line parser.go.y:42
+//line parser.go.y:43
 
 //line yacctab:1
 var yyExca = [...]int{
@@ -55,11 +55,11 @@ var yyPact = [...]int{
 }
 var yyPgo = [...]int{
 
-	0, 2, 4, 3,
+	0, 4, 3, 2,
 }
 var yyR1 = [...]int{
 
-	0, 2, 1, 1, 3,
+	0, 1, 3, 3, 2,
 }
 var yyR2 = [...]int{
 
@@ -67,7 +67,7 @@ var yyR2 = [...]int{
 }
 var yyChk = [...]int{
 
-	-1000, -2, -1, -3, 5, -1, 4,
+	-1000, -1, -3, -2, 5, -3, 4,
 }
 var yyDef = [...]int{
 
@@ -424,26 +424,28 @@ yydefault:
 
 	case 1:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:21
+		//line parser.go.y:20
 		{
-			yyVAL.expr = yyDollar[1].exprs
+			yyVAL.expr = yyDollar[1].expr
 			yylex.(*Lexer).result = yyVAL.expr
 		}
 	case 2:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:28
+		//line parser.go.y:27
 		{
-			yyVAL.exprs = []Expr{yyDollar[1].expr}
+			yyVAL.expr = UnorderedListExpr{items: []UnorderedListItemExpr{yyDollar[1].expr.(UnorderedListItemExpr)}}
 		}
 	case 3:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser.go.y:32
+		//line parser.go.y:31
 		{
-			yyVAL.exprs = append([]Expr{yyDollar[1].expr}, yyDollar[2].exprs...)
+			items := yyDollar[2].expr.(UnorderedListExpr).items
+			list := UnorderedListExpr{items: append([]UnorderedListItemExpr{yyDollar[1].expr.(UnorderedListItemExpr)}, items...)}
+			yyVAL.expr = list
 		}
 	case 4:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser.go.y:38
+		//line parser.go.y:39
 		{
 			yyVAL.expr = UnorderedListItemExpr{text: yyDollar[2].token.literal}
 		}
