@@ -32,6 +32,13 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
+			input: "姉\n弟\n",
+			result: []Block{
+				Line{text: "姉"},
+				Line{text: "弟"},
+			},
+		},
+		{
 			input: "- a\n- b\na\nb",
 			result: []Block{
 				UnorderedList{
