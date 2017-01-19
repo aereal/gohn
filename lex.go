@@ -27,7 +27,7 @@ type Token struct {
 
 type Lexer struct {
 	scanner.Scanner
-	result Expr
+	result []Expr
 	err    *ParseError
 }
 
@@ -70,7 +70,7 @@ func (l *Lexer) Error(e string) {
 	}
 }
 
-func Parse(src io.Reader) (Expr, error) {
+func Parse(src io.Reader) ([]Expr, error) {
 	lex := NewLexer(src)
 	if ok := yyParse(lex); ok == 0 {
 		return lex.result, nil

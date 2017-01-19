@@ -11,15 +11,21 @@ package main
 
 %token<token> TEXT
 %token UNORDERED_LIST_MARKER
-%type<expr> document unordered_list_item unordered_list
+%type<expr> block unordered_list_item unordered_list
+%type<exprs> blocks
 
 %%
 
-document:
+blocks:
+      block
+      {
+        yylex.(*Lexer).result = []Expr{$1}
+      }
+
+block:
         unordered_list
         {
           $$ = $1
-          yylex.(*Lexer).result = $$
         }
 
 unordered_list:

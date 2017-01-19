@@ -28,7 +28,7 @@ const yyEofCode = 1
 const yyErrCode = 2
 const yyInitialStackSize = 16
 
-//line parser.go.y:43
+//line parser.go.y:49
 
 //line yacctab:1
 var yyExca = [...]int{
@@ -37,7 +37,7 @@ var yyExca = [...]int{
 	-2, 0,
 }
 
-const yyNprod = 5
+const yyNprod = 6
 const yyPrivate = 57344
 
 var yyTokenNames []string
@@ -47,31 +47,31 @@ const yyLast = 7
 
 var yyAct = [...]int{
 
-	4, 6, 2, 3, 1, 0, 5,
+	5, 3, 7, 1, 4, 2, 6,
 }
 var yyPact = [...]int{
 
-	-5, -1000, -1000, -5, -3, -1000, -1000,
+	-5, -1000, -1000, -1000, -5, -2, -1000, -1000,
 }
 var yyPgo = [...]int{
 
-	0, 4, 3, 2,
+	0, 5, 4, 1, 3,
 }
 var yyR1 = [...]int{
 
-	0, 1, 3, 3, 2,
+	0, 4, 1, 3, 3, 2,
 }
 var yyR2 = [...]int{
 
-	0, 1, 1, 2, 2,
+	0, 1, 1, 1, 2, 2,
 }
 var yyChk = [...]int{
 
-	-1000, -1, -3, -2, 5, -3, 4,
+	-1000, -4, -1, -3, -2, 5, -3, 4,
 }
 var yyDef = [...]int{
 
-	0, -2, 1, 2, 0, 3, 4,
+	0, -2, 1, 2, 3, 0, 4, 5,
 }
 var yyTok1 = [...]int{
 
@@ -424,28 +424,33 @@ yydefault:
 
 	case 1:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:20
+		//line parser.go.y:21
 		{
-			yyVAL.expr = yyDollar[1].expr
-			yylex.(*Lexer).result = yyVAL.expr
+			yylex.(*Lexer).result = []Expr{yyDollar[1].expr}
 		}
 	case 2:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser.go.y:27
 		{
-			yyVAL.expr = UnorderedListExpr{items: []UnorderedListItemExpr{yyDollar[1].expr.(UnorderedListItemExpr)}}
+			yyVAL.expr = yyDollar[1].expr
 		}
 	case 3:
+		yyDollar = yyS[yypt-1 : yypt+1]
+		//line parser.go.y:33
+		{
+			yyVAL.expr = UnorderedListExpr{items: []UnorderedListItemExpr{yyDollar[1].expr.(UnorderedListItemExpr)}}
+		}
+	case 4:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser.go.y:31
+		//line parser.go.y:37
 		{
 			items := yyDollar[2].expr.(UnorderedListExpr).items
 			list := UnorderedListExpr{items: append([]UnorderedListItemExpr{yyDollar[1].expr.(UnorderedListItemExpr)}, items...)}
 			yyVAL.expr = list
 		}
-	case 4:
+	case 5:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser.go.y:39
+		//line parser.go.y:45
 		{
 			yyVAL.expr = UnorderedListItemExpr{text: yyDollar[2].token.literal}
 		}
