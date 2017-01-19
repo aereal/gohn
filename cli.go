@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"os"
 )
 
 const Name string = "text-hatena"
@@ -20,11 +21,11 @@ func (cli *CLI) Run(args []string) int {
 		return 1
 	}
 
-	parsedArgs := flags.Args()
-	if len(parsedArgs) < 1 {
-		fmt.Fprintln(cli.errorStream, "Usage: "+Name)
+	if result, err := Parse(os.Stdin); err != nil {
+		fmt.Printf("! Error: %#v\n", err)
 		return 1
+	} else {
+		fmt.Printf("%#v\n", result)
+		return 0
 	}
-
-	return 0
 }
