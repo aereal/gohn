@@ -5,21 +5,21 @@ package main
 
 %union{
   token Token
-  expr Expr
-  exprs []Expr
+  block Block
+  blocks []Block
 }
 
 %token<token> TEXT
 %token UNORDERED_LIST_MARKER
-%type<expr> block unordered_list_item unordered_list
-%type<exprs> blocks
+%type<block> block unordered_list_item unordered_list
+%type<blocks> blocks
 
 %%
 
 blocks:
       block
       {
-        yylex.(*Lexer).result = []Expr{$1}
+        yylex.(*Lexer).result = []Block{$1}
       }
 
 block:
@@ -31,19 +31,19 @@ block:
 unordered_list:
               unordered_list_item
               {
-                $$ = UnorderedListExpr{items: []UnorderedListItemExpr{$1.(UnorderedListItemExpr)}}
+                $$ = UnorderedListBlock{items: []UnorderedListItemBlock{$1.(UnorderedListItemBlock)}}
               }
               | unordered_list_item unordered_list
               {
-                items := $2.(UnorderedListExpr).items
-                list := UnorderedListExpr{items: append([]UnorderedListItemExpr{$1.(UnorderedListItemExpr)}, items...)}
+                items := $2.(UnorderedListBlock).items
+                list := UnorderedListBlock{items: append([]UnorderedListItemBlock{$1.(UnorderedListItemBlock)}, items...)}
                 $$ = list
               }
 
 unordered_list_item:
                    UNORDERED_LIST_MARKER TEXT
                    {
-                    $$ = UnorderedListItemExpr{text: $2.literal}
+                    $$ = UnorderedListItemBlock{text: $2.literal}
                    }
 
 %%

@@ -10,13 +10,13 @@ var symbolTables = map[string]int{
 	"-": UNORDERED_LIST_MARKER,
 }
 
-type Expr interface{}
+type Block interface{}
 
-type UnorderedListExpr struct {
-	items []UnorderedListItemExpr
+type UnorderedListBlock struct {
+	items []UnorderedListItemBlock
 }
 
-type UnorderedListItemExpr struct {
+type UnorderedListItemBlock struct {
 	text string
 }
 
@@ -27,7 +27,7 @@ type Token struct {
 
 type Lexer struct {
 	scanner.Scanner
-	result []Expr
+	result []Block
 	err    *ParseError
 }
 
@@ -70,7 +70,7 @@ func (l *Lexer) Error(e string) {
 	}
 }
 
-func Parse(src io.Reader) ([]Expr, error) {
+func Parse(src io.Reader) ([]Block, error) {
 	lex := NewLexer(src)
 	if ok := yyParse(lex); ok == 0 {
 		return lex.result, nil

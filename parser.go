@@ -6,10 +6,10 @@ import __yyfmt__ "fmt"
 //line parser.go.y:2
 //line parser.go.y:6
 type yySymType struct {
-	yys   int
-	token Token
-	expr  Expr
-	exprs []Expr
+	yys    int
+	token  Token
+	block  Block
+	blocks []Block
 }
 
 const TEXT = 57346
@@ -426,33 +426,33 @@ yydefault:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser.go.y:21
 		{
-			yylex.(*Lexer).result = []Expr{yyDollar[1].expr}
+			yylex.(*Lexer).result = []Block{yyDollar[1].block}
 		}
 	case 2:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser.go.y:27
 		{
-			yyVAL.expr = yyDollar[1].expr
+			yyVAL.block = yyDollar[1].block
 		}
 	case 3:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser.go.y:33
 		{
-			yyVAL.expr = UnorderedListExpr{items: []UnorderedListItemExpr{yyDollar[1].expr.(UnorderedListItemExpr)}}
+			yyVAL.block = UnorderedListBlock{items: []UnorderedListItemBlock{yyDollar[1].block.(UnorderedListItemBlock)}}
 		}
 	case 4:
 		yyDollar = yyS[yypt-2 : yypt+1]
 		//line parser.go.y:37
 		{
-			items := yyDollar[2].expr.(UnorderedListExpr).items
-			list := UnorderedListExpr{items: append([]UnorderedListItemExpr{yyDollar[1].expr.(UnorderedListItemExpr)}, items...)}
-			yyVAL.expr = list
+			items := yyDollar[2].block.(UnorderedListBlock).items
+			list := UnorderedListBlock{items: append([]UnorderedListItemBlock{yyDollar[1].block.(UnorderedListItemBlock)}, items...)}
+			yyVAL.block = list
 		}
 	case 5:
 		yyDollar = yyS[yypt-2 : yypt+1]
 		//line parser.go.y:45
 		{
-			yyVAL.expr = UnorderedListItemExpr{text: yyDollar[2].token.literal}
+			yyVAL.block = UnorderedListItemBlock{text: yyDollar[2].token.literal}
 		}
 	}
 	goto yystack /* stack new state and value */
