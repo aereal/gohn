@@ -49,6 +49,11 @@ func isIdent(ch rune, size int) bool {
 	return unicode.IsGraphic(ch)
 }
 
+func isReserved(ch rune) bool {
+	_, ok := symbolTables[string(ch)]
+	return ok
+}
+
 func NewLexer(in io.Reader) *Lexer {
 	l := new(Lexer)
 	l.Init(in)
@@ -66,7 +71,7 @@ func (l *Lexer) skipBlank() {
 func (l *Lexer) Lex(lval *yySymType) int {
 	l.skipBlank()
 	ch := l.Peek()
-	if _, ok := symbolTables[string(ch)]; ok {
+	if isReserved(ch) {
 		_ = l.Next()
 		s := string(ch)
 		token := symbolTables[s]
