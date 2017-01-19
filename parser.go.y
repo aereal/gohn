@@ -31,19 +31,19 @@ block:
 unordered_list:
               unordered_list_item
               {
-                $$ = UnorderedListBlock{items: []UnorderedListItemBlock{$1.(UnorderedListItemBlock)}}
+                $$ = UnorderedList{items: []UnorderedListItem{$1.(UnorderedListItem)}}
               }
               | unordered_list_item unordered_list
               {
-                items := $2.(UnorderedListBlock).items
-                list := UnorderedListBlock{items: append([]UnorderedListItemBlock{$1.(UnorderedListItemBlock)}, items...)}
+                items := $2.(UnorderedList).items
+                list := UnorderedList{items: append([]UnorderedListItem{$1.(UnorderedListItem)}, items...)}
                 $$ = list
               }
 
 unordered_list_item:
                    UNORDERED_LIST_MARKER TEXT
                    {
-                    $$ = UnorderedListItemBlock{text: $2.literal}
+                    $$ = UnorderedListItem{text: $2.literal}
                    }
 
 %%

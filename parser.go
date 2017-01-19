@@ -438,21 +438,21 @@ yydefault:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser.go.y:33
 		{
-			yyVAL.block = UnorderedListBlock{items: []UnorderedListItemBlock{yyDollar[1].block.(UnorderedListItemBlock)}}
+			yyVAL.block = UnorderedList{items: []UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}}
 		}
 	case 4:
 		yyDollar = yyS[yypt-2 : yypt+1]
 		//line parser.go.y:37
 		{
-			items := yyDollar[2].block.(UnorderedListBlock).items
-			list := UnorderedListBlock{items: append([]UnorderedListItemBlock{yyDollar[1].block.(UnorderedListItemBlock)}, items...)}
+			items := yyDollar[2].block.(UnorderedList).items
+			list := UnorderedList{items: append([]UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}, items...)}
 			yyVAL.block = list
 		}
 	case 5:
 		yyDollar = yyS[yypt-2 : yypt+1]
 		//line parser.go.y:45
 		{
-			yyVAL.block = UnorderedListItemBlock{text: yyDollar[2].token.literal}
+			yyVAL.block = UnorderedListItem{text: yyDollar[2].token.literal}
 		}
 	}
 	goto yystack /* stack new state and value */

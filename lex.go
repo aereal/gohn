@@ -12,11 +12,11 @@ var symbolTables = map[string]int{
 
 type Block interface{}
 
-type UnorderedListBlock struct {
-	items []UnorderedListItemBlock
+type UnorderedList struct {
+	items []UnorderedListItem
 }
 
-type UnorderedListItemBlock struct {
+type UnorderedListItem struct {
 	text string
 }
 
