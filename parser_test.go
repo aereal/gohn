@@ -37,10 +37,12 @@ func TestParser_Parse(t *testing.T) {
 		actual, err := Parse(strings.NewReader(expect.input))
 		if err != nil {
 			t.Errorf("! #%d Failed to parse: %q", i, err)
+			continue
 		}
 		ok, msg := matchResult(expect.result, actual)
 		if !ok {
 			t.Error(msg)
+			continue
 		}
 	}
 }
