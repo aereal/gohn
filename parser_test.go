@@ -39,6 +39,13 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
+			input: "http://example.com/\n弟\n",
+			result: []Block{
+				Line{text: "http://example.com/"},
+				Line{text: "弟"},
+			},
+		},
+		{
 			input: "- a\n- b\na\nb",
 			result: []Block{
 				UnorderedList{
