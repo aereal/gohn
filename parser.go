@@ -28,7 +28,7 @@ const yyEofCode = 1
 const yyErrCode = 2
 const yyInitialStackSize = 16
 
-//line parser.go.y:49
+//line parser.go.y:65
 
 //line yacctab:1
 var yyExca = [...]int{
@@ -37,41 +37,45 @@ var yyExca = [...]int{
 	-2, 0,
 }
 
-const yyNprod = 6
+const yyNprod = 9
 const yyPrivate = 57344
 
 var yyTokenNames []string
 var yyStates []string
 
-const yyLast = 7
+const yyLast = 11
 
 var yyAct = [...]int{
 
-	5, 3, 7, 1, 4, 2, 6,
+	6, 7, 3, 7, 10, 4, 1, 5, 9, 8,
+	2,
 }
 var yyPact = [...]int{
 
-	-5, -1000, -1000, -1000, -5, -2, -1000, -1000,
+	-4, -1000, -4, -1000, -1000, -2, -1000, 0, -1000, -1000,
+	-1000,
 }
 var yyPgo = [...]int{
 
-	0, 5, 4, 1, 3,
+	0, 10, 7, 2, 5, 6,
 }
 var yyR1 = [...]int{
 
-	0, 4, 1, 3, 3, 2,
+	0, 5, 5, 1, 1, 4, 3, 3, 2,
 }
 var yyR2 = [...]int{
 
-	0, 1, 1, 1, 2, 2,
+	0, 1, 2, 1, 1, 1, 1, 2, 2,
 }
 var yyChk = [...]int{
 
-	-1000, -4, -1, -3, -2, 5, -3, 4,
+	-1000, -5, -1, -3, -4, -2, 4, 5, -5, -3,
+	4,
 }
 var yyDef = [...]int{
 
-	0, -2, 1, 2, 3, 0, 4, 5,
+	0, -2, 1, 3, 4, 6, 5, 0, 2, 7,
+	8,
 }
 var yyTok1 = [...]int{
 
@@ -426,31 +430,51 @@ yydefault:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser.go.y:21
 		{
-			yylex.(*Lexer).result = []Block{yyDollar[1].block}
+			yyVAL.blocks = []Block{yyDollar[1].block}
+			yylex.(*Lexer).result = yyVAL.blocks
 		}
 	case 2:
-		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:27
+		yyDollar = yyS[yypt-2 : yypt+1]
+		//line parser.go.y:26
 		{
-			yyVAL.block = yyDollar[1].block
+			yyVAL.blocks = append([]Block{yyDollar[1].block}, yyDollar[2].blocks...)
+			yylex.(*Lexer).result = yyVAL.blocks
 		}
 	case 3:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser.go.y:33
 		{
-			yyVAL.block = UnorderedList{items: []UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}}
+			yyVAL.block = yyDollar[1].block
 		}
 	case 4:
-		yyDollar = yyS[yypt-2 : yypt+1]
+		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser.go.y:37
+		{
+			yyVAL.block = yyDollar[1].block
+		}
+	case 5:
+		yyDollar = yyS[yypt-1 : yypt+1]
+		//line parser.go.y:43
+		{
+			yyVAL.block = Line{text: yyDollar[1].token.literal}
+		}
+	case 6:
+		yyDollar = yyS[yypt-1 : yypt+1]
+		//line parser.go.y:49
+		{
+			yyVAL.block = UnorderedList{items: []UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}}
+		}
+	case 7:
+		yyDollar = yyS[yypt-2 : yypt+1]
+		//line parser.go.y:53
 		{
 			items := yyDollar[2].block.(UnorderedList).items
 			list := UnorderedList{items: append([]UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}, items...)}
 			yyVAL.block = list
 		}
-	case 5:
+	case 8:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser.go.y:45
+		//line parser.go.y:61
 		{
 			yyVAL.block = UnorderedListItem{text: yyDollar[2].token.literal}
 		}

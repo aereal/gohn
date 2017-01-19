@@ -19,6 +19,10 @@ type UnorderedListItem struct {
 	text string
 }
 
+type Line struct {
+	text string
+}
+
 type Token struct {
 	token   int
 	literal string

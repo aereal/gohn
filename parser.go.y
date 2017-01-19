@@ -11,7 +11,7 @@ package main
 
 %token<token> TEXT
 %token UNORDERED_LIST_MARKER
-%type<block> block unordered_list_item unordered_list
+%type<block> block unordered_list_item unordered_list line
 %type<blocks> blocks
 
 %%
@@ -19,7 +19,13 @@ package main
 blocks:
       block
       {
-        yylex.(*Lexer).result = []Block{$1}
+        $$ = []Block{$1}
+        yylex.(*Lexer).result = $$
+      }
+      | block blocks
+      {
+        $$ = append([]Block{$1}, $2...)
+        yylex.(*Lexer).result = $$
       }
 
 block:
@@ -27,6 +33,16 @@ block:
         {
           $$ = $1
         }
+        | line
+        {
+          $$ = $1
+        }
+
+line:
+    TEXT
+    {
+      $$ = Line{text: $1.literal}
+    }
 
 unordered_list:
               unordered_list_item

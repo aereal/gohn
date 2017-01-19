@@ -24,6 +24,13 @@ func TestParser_Parse(t *testing.T) {
 				},
 			},
 		},
+		{
+			input: "a\nb",
+			result: []Block{
+				Line{text: "a"},
+				Line{text: "b"},
+			},
+		},
 	}
 
 	for i, expect := range expectations {
