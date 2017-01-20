@@ -15,7 +15,7 @@ type expectation struct {
 func TestParser_Parse(t *testing.T) {
 	var expectations = []expectation{
 		{
-			input: `- a`,
+			input: "- a\n",
 			result: []Block{
 				UnorderedList{
 					items: []UnorderedListItem{
@@ -25,7 +25,7 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
-			input: "a\nb",
+			input: "a\nb\n",
 			result: []Block{
 				Line{text: "a"},
 				Line{text: "b"},
@@ -46,7 +46,7 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
-			input: "- a\n- b\na\nb",
+			input: "- a\n- b\na\nb\n",
 			result: []Block{
 				UnorderedList{
 					items: []UnorderedListItem{
