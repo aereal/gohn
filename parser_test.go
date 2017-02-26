@@ -15,7 +15,7 @@ type expectation struct {
 func TestParser_Parse(t *testing.T) {
 	var expectations = []expectation{
 		{
-			input: `- a`,
+			input: "- a\n",
 			result: []Block{
 				UnorderedList{
 					items: []UnorderedListItem{
@@ -25,21 +25,52 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
-			input: "a\nb",
+			input: "a\nb\n",
 			result: []Block{
-				Line{text: "a"},
-				Line{text: "b"},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "a"},
+					},
+				},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "b"},
+					},
+				},
 			},
 		},
 		{
 			input: "姉\n弟\n",
 			result: []Block{
-				Line{text: "姉"},
-				Line{text: "弟"},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "姉"},
+					},
+				},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "弟"},
+					},
+				},
 			},
 		},
 		{
-			input: "- a\n- b\na\nb",
+			input: "[http://example.com/]\n弟\n",
+			result: []Block{
+				Line{
+					inlines: []Inline{
+						InlineHttp{url: "http://example.com/"},
+					},
+				},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "弟"},
+					},
+				},
+			},
+		},
+		{
+			input: "- a\n- b\na\nb\n",
 			result: []Block{
 				UnorderedList{
 					items: []UnorderedListItem{
@@ -47,8 +78,16 @@ func TestParser_Parse(t *testing.T) {
 						UnorderedListItem{text: "b"},
 					},
 				},
-				Line{text: "a"},
-				Line{text: "b"},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "a"},
+					},
+				},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "b"},
+					},
+				},
 			},
 		},
 	}

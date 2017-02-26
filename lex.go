@@ -3,13 +3,21 @@ package main
 import (
 	"io"
 	"text/scanner"
+	"unicode"
 )
 
+const NEW_LINE = '\n'
+
 var symbolTables = map[string]int{
-	"-": UNORDERED_LIST_MARKER,
+	"-":              UNORDERED_LIST_MARKER,
+	string(NEW_LINE): CR,
+	"[":              LBRACKET,
+	"]":              RBRACKET,
 }
 
 type Block interface{}
+
+type Inline interface{}
 
 type UnorderedList struct {
 	items []UnorderedListItem
@@ -20,7 +28,16 @@ type UnorderedListItem struct {
 }
 
 type Line struct {
-	text string
+	text    string
+	inlines []Inline
+}
+
+type InlineText struct {
+	literal string
+}
+
+type InlineHttp struct {
+	url string
 }
 
 type Token struct {
@@ -44,24 +61,52 @@ func (e *ParseError) Error() string {
 	return e.Message
 }
 
+func isIdent(ch rune, size int) bool {
+	return unicode.IsGraphic(ch) && !isReserved(ch) && !unicode.IsSpace(ch)
+}
+
+func isReserved(ch rune) bool {
+	_, ok := symbolTables[string(ch)]
+	return ok
+}
+
+func isWhitespace(ch rune) bool {
+	return unicode.IsSpace(ch) && ch != rune(NEW_LINE)
+}
+
 func NewLexer(in io.Reader) *Lexer {
 	l := new(Lexer)
 	l.Init(in)
 	l.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanStrings | scanner.ScanComments | scanner.SkipComments
+	l.IsIdentRune = isIdent
+	l.Whitespace = 1<<' ' | 1<<'\t'
 	return l
 }
 
+func (l *Lexer) skipBlank() {
+	for isWhitespace(l.Peek()) {
+		l.Next()
+	}
+}
+
 func (l *Lexer) Lex(lval *yySymType) int {
-	token := int(l.Scan())
-	s := l.TokenText()
-	if token == scanner.String || token == scanner.Ident {
-		token = TEXT
+	l.skipBlank()
+	ch := l.Peek()
+	if isReserved(ch) {
+		_ = l.Next()
+		s := string(ch)
+		token := symbolTables[s]
+		lval.token = Token{token: token, literal: s}
+		return token
+	} else {
+		token := int(l.Scan())
+		s := l.TokenText()
+		if token == scanner.String || token == scanner.Ident {
+			token = TEXT
+		}
+		lval.token = Token{token: token, literal: s}
+		return token
 	}
-	if _, ok := symbolTables[s]; ok {
-		token = symbolTables[s]
-	}
-	lval.token = Token{token: token, literal: s}
-	return token
 }
 
 func (l *Lexer) Error(e string) {
