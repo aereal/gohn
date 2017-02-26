@@ -15,6 +15,8 @@ var symbolTables = map[string]int{
 
 type Block interface{}
 
+type Inline interface{}
+
 type UnorderedList struct {
 	items []UnorderedListItem
 }
@@ -24,7 +26,12 @@ type UnorderedListItem struct {
 }
 
 type Line struct {
-	text string
+	text    string
+	inlines []Inline
+}
+
+type InlineText struct {
+	literal string
 }
 
 type Token struct {

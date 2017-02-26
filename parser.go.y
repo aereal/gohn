@@ -7,12 +7,16 @@ package main
   token Token
   block Block
   blocks []Block
+  inline Inline
+  inlines []Inline
 }
 
 %token<token> TEXT
 %token UNORDERED_LIST_MARKER CR
 %type<block> block unordered_list_item unordered_list line
 %type<blocks> blocks
+%type<inline> inline
+%type<inlines> inlines
 
 %%
 
@@ -39,10 +43,26 @@ block:
         }
 
 line:
-    TEXT CR
+    inlines CR
     {
-      $$ = Line{text: $1.literal}
+      $$ = Line{inlines: $1}
     }
+
+inlines:
+       inline
+       {
+        $$ = []Inline{$1}
+       }
+       | inline inlines
+       {
+        $$ = append([]Inline{$1}, $2...)
+       }
+
+inline:
+      TEXT
+      {
+        $$ = InlineText{literal: $1.literal}
+      }
 
 unordered_list:
               unordered_list_item

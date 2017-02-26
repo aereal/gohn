@@ -27,22 +27,46 @@ func TestParser_Parse(t *testing.T) {
 		{
 			input: "a\nb\n",
 			result: []Block{
-				Line{text: "a"},
-				Line{text: "b"},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "a"},
+					},
+				},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "b"},
+					},
+				},
 			},
 		},
 		{
 			input: "姉\n弟\n",
 			result: []Block{
-				Line{text: "姉"},
-				Line{text: "弟"},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "姉"},
+					},
+				},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "弟"},
+					},
+				},
 			},
 		},
 		{
 			input: "http://example.com/\n弟\n",
 			result: []Block{
-				Line{text: "http://example.com/"},
-				Line{text: "弟"},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "http://example.com/"},
+					},
+				},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "弟"},
+					},
+				},
 			},
 		},
 		{
@@ -54,8 +78,16 @@ func TestParser_Parse(t *testing.T) {
 						UnorderedListItem{text: "b"},
 					},
 				},
-				Line{text: "a"},
-				Line{text: "b"},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "a"},
+					},
+				},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "b"},
+					},
+				},
 			},
 		},
 	}
