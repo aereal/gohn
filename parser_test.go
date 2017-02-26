@@ -55,11 +55,11 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
-			input: "http://example.com/\n弟\n",
+			input: "[http://example.com/]\n弟\n",
 			result: []Block{
 				Line{
 					inlines: []Inline{
-						InlineText{literal: "http://example.com/"},
+						InlineHttp{url: "http://example.com/"},
 					},
 				},
 				Line{

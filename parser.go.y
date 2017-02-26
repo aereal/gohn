@@ -12,10 +12,10 @@ package main
 }
 
 %token<token> TEXT
-%token UNORDERED_LIST_MARKER CR
+%token UNORDERED_LIST_MARKER CR LBRACKET RBRACKET
 %type<block> block unordered_list_item unordered_list line
 %type<blocks> blocks
-%type<inline> inline
+%type<inline> inline inline_text inline_http
 %type<inlines> inlines
 
 %%
@@ -59,10 +59,20 @@ inlines:
        }
 
 inline:
+      inline_http
+      | inline_text
+
+inline_text:
       TEXT
       {
         $$ = InlineText{literal: $1.literal}
       }
+
+inline_http:
+           LBRACKET TEXT RBRACKET
+           {
+            $$ = InlineHttp{url: $2.literal}
+           }
 
 unordered_list:
               unordered_list_item

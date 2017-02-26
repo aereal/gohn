@@ -11,6 +11,8 @@ const NEW_LINE = '\n'
 var symbolTables = map[string]int{
 	"-":              UNORDERED_LIST_MARKER,
 	string(NEW_LINE): CR,
+	"[":              LBRACKET,
+	"]":              RBRACKET,
 }
 
 type Block interface{}
@@ -32,6 +34,10 @@ type Line struct {
 
 type InlineText struct {
 	literal string
+}
+
+type InlineHttp struct {
+	url string
 }
 
 type Token struct {
@@ -56,7 +62,7 @@ func (e *ParseError) Error() string {
 }
 
 func isIdent(ch rune, size int) bool {
-	return unicode.IsGraphic(ch)
+	return unicode.IsGraphic(ch) && !isReserved(ch) && !unicode.IsSpace(ch)
 }
 
 func isReserved(ch rune) bool {
