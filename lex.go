@@ -54,6 +54,10 @@ func isReserved(ch rune) bool {
 	return ok
 }
 
+func isWhitespace(ch rune) bool {
+	return unicode.IsSpace(ch) && ch != rune('\n')
+}
+
 func NewLexer(in io.Reader) *Lexer {
 	l := new(Lexer)
 	l.Init(in)
@@ -63,7 +67,7 @@ func NewLexer(in io.Reader) *Lexer {
 }
 
 func (l *Lexer) skipBlank() {
-	for unicode.IsSpace(l.Peek()) {
+	for isWhitespace(l.Peek()) {
 		l.Next()
 	}
 }
