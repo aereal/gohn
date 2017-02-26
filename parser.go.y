@@ -10,7 +10,7 @@ package main
 }
 
 %token<token> TEXT
-%token UNORDERED_LIST_MARKER
+%token UNORDERED_LIST_MARKER CR
 %type<block> block unordered_list_item unordered_list line
 %type<blocks> blocks
 
@@ -39,7 +39,7 @@ block:
         }
 
 line:
-    TEXT
+    TEXT CR
     {
       $$ = Line{text: $1.literal}
     }
@@ -57,7 +57,7 @@ unordered_list:
               }
 
 unordered_list_item:
-                   UNORDERED_LIST_MARKER TEXT
+                   UNORDERED_LIST_MARKER TEXT CR
                    {
                     $$ = UnorderedListItem{text: $2.literal}
                    }

@@ -14,6 +14,7 @@ type yySymType struct {
 
 const TEXT = 57346
 const UNORDERED_LIST_MARKER = 57347
+const CR = 57348
 
 var yyToknames = [...]string{
 	"$end",
@@ -21,6 +22,7 @@ var yyToknames = [...]string{
 	"$unk",
 	"TEXT",
 	"UNORDERED_LIST_MARKER",
+	"CR",
 }
 var yyStatenames = [...]string{}
 
@@ -43,21 +45,21 @@ const yyPrivate = 57344
 var yyTokenNames []string
 var yyStates []string
 
-const yyLast = 11
+const yyLast = 13
 
 var yyAct = [...]int{
 
-	6, 7, 3, 7, 10, 4, 1, 5, 9, 8,
-	2,
+	12, 10, 6, 7, 3, 7, 11, 4, 1, 5,
+	9, 8, 2,
 }
 var yyPact = [...]int{
 
-	-4, -1000, -4, -1000, -1000, -2, -1000, 0, -1000, -1000,
-	-1000,
+	-2, -1000, -2, -1000, -1000, 0, -5, 2, -1000, -1000,
+	-1000, -6, -1000,
 }
 var yyPgo = [...]int{
 
-	0, 10, 7, 2, 5, 6,
+	0, 12, 9, 4, 7, 8,
 }
 var yyR1 = [...]int{
 
@@ -65,17 +67,17 @@ var yyR1 = [...]int{
 }
 var yyR2 = [...]int{
 
-	0, 1, 2, 1, 1, 1, 1, 2, 2,
+	0, 1, 2, 1, 1, 2, 1, 2, 3,
 }
 var yyChk = [...]int{
 
 	-1000, -5, -1, -3, -4, -2, 4, 5, -5, -3,
-	4,
+	6, 4, 6,
 }
 var yyDef = [...]int{
 
-	0, -2, 1, 3, 4, 6, 5, 0, 2, 7,
-	8,
+	0, -2, 1, 3, 4, 6, 0, 0, 2, 7,
+	5, 0, 8,
 }
 var yyTok1 = [...]int{
 
@@ -83,7 +85,7 @@ var yyTok1 = [...]int{
 }
 var yyTok2 = [...]int{
 
-	2, 3, 4, 5,
+	2, 3, 4, 5, 6,
 }
 var yyTok3 = [...]int{
 	0,
@@ -453,7 +455,7 @@ yydefault:
 			yyVAL.block = yyDollar[1].block
 		}
 	case 5:
-		yyDollar = yyS[yypt-1 : yypt+1]
+		yyDollar = yyS[yypt-2 : yypt+1]
 		//line parser.go.y:43
 		{
 			yyVAL.block = Line{text: yyDollar[1].token.literal}
@@ -473,7 +475,7 @@ yydefault:
 			yyVAL.block = list
 		}
 	case 8:
-		yyDollar = yyS[yypt-2 : yypt+1]
+		yyDollar = yyS[yypt-3 : yypt+1]
 		//line parser.go.y:61
 		{
 			yyVAL.block = UnorderedListItem{text: yyDollar[2].token.literal}

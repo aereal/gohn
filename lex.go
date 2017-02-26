@@ -6,8 +6,11 @@ import (
 	"unicode"
 )
 
+const NEW_LINE = '\n'
+
 var symbolTables = map[string]int{
-	"-": UNORDERED_LIST_MARKER,
+	"-":              UNORDERED_LIST_MARKER,
+	string(NEW_LINE): CR,
 }
 
 type Block interface{}
@@ -55,7 +58,7 @@ func isReserved(ch rune) bool {
 }
 
 func isWhitespace(ch rune) bool {
-	return unicode.IsSpace(ch) && ch != rune('\n')
+	return unicode.IsSpace(ch) && ch != rune(NEW_LINE)
 }
 
 func NewLexer(in io.Reader) *Lexer {
@@ -63,6 +66,7 @@ func NewLexer(in io.Reader) *Lexer {
 	l.Init(in)
 	l.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanStrings | scanner.ScanComments | scanner.SkipComments
 	l.IsIdentRune = isIdent
+	l.Whitespace = 1<<' ' | 1<<'\t'
 	return l
 }
 
