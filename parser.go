@@ -55,14 +55,14 @@ const yyLast = 25
 
 var yyAct = [...]int{
 
-	7, 14, 8, 9, 13, 14, 22, 3, 13, 21,
-	17, 19, 8, 16, 20, 18, 1, 6, 11, 15,
+	7, 14, 8, 9, 13, 14, 22, 3, 13, 18,
+	21, 19, 17, 16, 8, 20, 1, 6, 11, 15,
 	12, 10, 4, 5, 2,
 }
 var yyPact = [...]int{
 
-	-3, -1000, -3, -1000, -1000, 7, -1000, 4, 11, -1000,
-	1, -1000, -1000, 10, -1000, -1000, -1000, -1000, 3, -1000,
+	-3, -1000, -3, -1000, -1000, 9, -1000, 6, 1, -1000,
+	1, -1000, -1000, 11, -1000, -1000, -1000, -1000, 4, -1000,
 	-2, -1000, -1000,
 }
 var yyPgo = [...]int{
@@ -83,7 +83,7 @@ var yyR2 = [...]int{
 var yyChk = [...]int{
 
 	-1000, -5, -1, -3, -4, -2, -10, -9, 5, 6,
-	-6, -8, -7, 7, 4, -5, -3, 6, 4, -9,
+	-6, -8, -7, 7, 4, -5, -3, 6, -9, -9,
 	4, 6, 8,
 }
 var yyDef = [...]int{
@@ -521,7 +521,7 @@ yydefault:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		//line parser.go.y:98
 		{
-			yyVAL.block = UnorderedListItem{Text: yyDollar[2].token.literal}
+			yyVAL.block = UnorderedListItem{Inlines: yyDollar[2].inlines}
 		}
 	}
 	goto yystack /* stack new state and value */

@@ -19,7 +19,11 @@ func TestParser_Parse(t *testing.T) {
 			result: []Block{
 				UnorderedList{
 					Items: []UnorderedListItem{
-						UnorderedListItem{Text: "a"},
+						UnorderedListItem{
+							Inlines: []Inline{
+								InlineText{Literal: "a"},
+							},
+						},
 					},
 				},
 			},
@@ -74,8 +78,16 @@ func TestParser_Parse(t *testing.T) {
 			result: []Block{
 				UnorderedList{
 					Items: []UnorderedListItem{
-						UnorderedListItem{Text: "a"},
-						UnorderedListItem{Text: "b"},
+						UnorderedListItem{
+							Inlines: []Inline{
+								InlineText{Literal: "a"},
+							},
+						},
+						UnorderedListItem{
+							Inlines: []Inline{
+								InlineText{Literal: "b"},
+							},
+						},
 					},
 				},
 				Line{
@@ -104,6 +116,20 @@ func TestParser_Parse(t *testing.T) {
 				Line{
 					Inlines: []Inline{
 						InlineText{Literal: "b"},
+					},
+				},
+			},
+		},
+		{
+			input: "- [http://example.com/]\n",
+			result: []Block{
+				UnorderedList{
+					Items: []UnorderedListItem{
+						UnorderedListItem{
+							Inlines: []Inline{
+								InlineHttp{Url: "http://example.com/"},
+							},
+						},
 					},
 				},
 			},
