@@ -495,7 +495,7 @@ yydefault:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser.go.y:74
 		{
-			yyVAL.inline = InlineText{literal: yyDollar[1].token.literal}
+			yyVAL.inline = InlineText{Literal: yyDollar[1].token.literal}
 		}
 	case 13:
 		yyDollar = yyS[yypt-3 : yypt+1]

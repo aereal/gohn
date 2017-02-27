@@ -72,7 +72,7 @@ inline:
 inline_text:
       TEXT
       {
-        $$ = InlineText{literal: $1.literal}
+        $$ = InlineText{Literal: $1.literal}
       }
 
 inline_http:

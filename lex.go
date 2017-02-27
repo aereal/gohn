@@ -32,7 +32,7 @@ type Line struct {
 }
 
 type InlineText struct {
-	literal string
+	Literal string
 }
 
 type InlineHttp struct {

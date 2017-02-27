@@ -29,12 +29,12 @@ func TestParser_Parse(t *testing.T) {
 			result: []Block{
 				Line{
 					Inlines: []Inline{
-						InlineText{literal: "a"},
+						InlineText{Literal: "a"},
 					},
 				},
 				Line{
 					Inlines: []Inline{
-						InlineText{literal: "b"},
+						InlineText{Literal: "b"},
 					},
 				},
 			},
@@ -44,12 +44,12 @@ func TestParser_Parse(t *testing.T) {
 			result: []Block{
 				Line{
 					Inlines: []Inline{
-						InlineText{literal: "姉"},
+						InlineText{Literal: "姉"},
 					},
 				},
 				Line{
 					Inlines: []Inline{
-						InlineText{literal: "弟"},
+						InlineText{Literal: "弟"},
 					},
 				},
 			},
@@ -64,7 +64,7 @@ func TestParser_Parse(t *testing.T) {
 				},
 				Line{
 					Inlines: []Inline{
-						InlineText{literal: "弟"},
+						InlineText{Literal: "弟"},
 					},
 				},
 			},
@@ -80,12 +80,12 @@ func TestParser_Parse(t *testing.T) {
 				},
 				Line{
 					Inlines: []Inline{
-						InlineText{literal: "a"},
+						InlineText{Literal: "a"},
 					},
 				},
 				Line{
 					Inlines: []Inline{
-						InlineText{literal: "b"},
+						InlineText{Literal: "b"},
 					},
 				},
 			},
@@ -95,7 +95,7 @@ func TestParser_Parse(t *testing.T) {
 			result: []Block{
 				Line{
 					Inlines: []Inline{
-						InlineText{literal: "a"},
+						InlineText{Literal: "a"},
 					},
 				},
 				Line{
@@ -103,7 +103,7 @@ func TestParser_Parse(t *testing.T) {
 				},
 				Line{
 					Inlines: []Inline{
-						InlineText{literal: "b"},
+						InlineText{Literal: "b"},
 					},
 				},
 			},
