@@ -17,6 +17,7 @@ var symbolTables = map[string]int{
 	"]":              RBRACKET,
 	"<":              LT,
 	">":              GT,
+	"*":              HEADING_MARKER,
 }
 
 type Token struct {
@@ -42,6 +43,8 @@ func (t Token) Name() string {
 		return "LT"
 	case GT:
 		return "GT"
+	case HEADING_MARKER:
+		return "HEADING_MARKER"
 	case EOF:
 		return "EOF"
 	default:

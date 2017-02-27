@@ -46,6 +46,18 @@ func (q Quotation) MarshalJSON() ([]byte, error) {
 	})
 }
 
+func (h Heading) MarshalJSON() ([]byte, error) {
+	return json.Marshal(struct {
+		Name    string
+		Level   int
+		Content []Inline
+	}{
+		Name:    "Heading",
+		Level:   h.Level,
+		Content: h.Content,
+	})
+}
+
 func (it InlineText) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Name    string

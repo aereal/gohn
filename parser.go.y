@@ -14,13 +14,14 @@ package main
 }
 
 %token<token> TEXT
-%token UNORDERED_LIST_MARKER ORDERED_LIST_MARKER CR LBRACKET RBRACKET LT GT
-%type<block> block unordered_list_item unordered_list ordered_list ordered_list_item line quotation
+%token UNORDERED_LIST_MARKER ORDERED_LIST_MARKER CR LBRACKET RBRACKET LT GT HEADING_MARKER
+%type<block> block unordered_list_item unordered_list ordered_list ordered_list_item line quotation heading
 %type<blocks> blocks
 %type<inline> inline inline_text inline_http
 %type<inlines> inlines
 %type<url> url quotation_prefix
 %type<depth> unordered_list_markers
+%type<depth> heading_prefix
 
 %%
 
@@ -46,6 +47,10 @@ block:
           $$ = $1
         }
         | quotation
+        {
+          $$ = $1
+        }
+        | heading
         {
           $$ = $1
         }
@@ -166,5 +171,21 @@ quotation_prefix:
 
 quotation_suffix:
                 LT LT CR
+
+heading:
+       heading_prefix inlines CR
+       {
+        $$ = Heading{Level: $1, Content: $2}
+       }
+
+heading_prefix:
+              HEADING_MARKER
+              {
+                $$ = 1
+              }
+              | HEADING_MARKER heading_prefix
+              {
+                $$ = $2 + 1
+              }
 
 %%

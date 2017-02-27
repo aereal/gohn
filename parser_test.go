@@ -271,6 +271,36 @@ func TestParser_Parse(t *testing.T) {
 				},
 			},
 		},
+		{
+			description: "heading",
+			input:       "* a\n",
+			result: []Block{
+				Heading{
+					Level: 1,
+					Content: []Inline{
+						InlineText{Literal: "a"},
+					},
+				},
+			},
+		},
+		{
+			description: "heading with different level",
+			input:       "* a\n** b\n",
+			result: []Block{
+				Heading{
+					Level: 1,
+					Content: []Inline{
+						InlineText{Literal: "a"},
+					},
+				},
+				Heading{
+					Level: 2,
+					Content: []Inline{
+						InlineText{Literal: "b"},
+					},
+				},
+			},
+		},
 	}
 
 	for i, expect := range expectations {

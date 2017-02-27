@@ -30,6 +30,11 @@ type Quotation struct {
 	Content []Block
 }
 
+type Heading struct {
+	Level   int
+	Content []Inline
+}
+
 type InlineText struct {
 	Literal string
 }
