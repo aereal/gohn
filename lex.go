@@ -28,7 +28,7 @@ type UnorderedListItem struct {
 }
 
 type Line struct {
-	inlines []Inline
+	Inlines []Inline
 }
 
 type InlineText struct {

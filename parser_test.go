@@ -28,12 +28,12 @@ func TestParser_Parse(t *testing.T) {
 			input: "a\nb\n",
 			result: []Block{
 				Line{
-					inlines: []Inline{
+					Inlines: []Inline{
 						InlineText{literal: "a"},
 					},
 				},
 				Line{
-					inlines: []Inline{
+					Inlines: []Inline{
 						InlineText{literal: "b"},
 					},
 				},
@@ -43,12 +43,12 @@ func TestParser_Parse(t *testing.T) {
 			input: "姉\n弟\n",
 			result: []Block{
 				Line{
-					inlines: []Inline{
+					Inlines: []Inline{
 						InlineText{literal: "姉"},
 					},
 				},
 				Line{
-					inlines: []Inline{
+					Inlines: []Inline{
 						InlineText{literal: "弟"},
 					},
 				},
@@ -58,12 +58,12 @@ func TestParser_Parse(t *testing.T) {
 			input: "[http://example.com/]\n弟\n",
 			result: []Block{
 				Line{
-					inlines: []Inline{
+					Inlines: []Inline{
 						InlineHttp{url: "http://example.com/"},
 					},
 				},
 				Line{
-					inlines: []Inline{
+					Inlines: []Inline{
 						InlineText{literal: "弟"},
 					},
 				},
@@ -79,12 +79,12 @@ func TestParser_Parse(t *testing.T) {
 					},
 				},
 				Line{
-					inlines: []Inline{
+					Inlines: []Inline{
 						InlineText{literal: "a"},
 					},
 				},
 				Line{
-					inlines: []Inline{
+					Inlines: []Inline{
 						InlineText{literal: "b"},
 					},
 				},
@@ -94,15 +94,15 @@ func TestParser_Parse(t *testing.T) {
 			input: "a\n\nb\n",
 			result: []Block{
 				Line{
-					inlines: []Inline{
+					Inlines: []Inline{
 						InlineText{literal: "a"},
 					},
 				},
 				Line{
-					inlines: []Inline{},
+					Inlines: []Inline{},
 				},
 				Line{
-					inlines: []Inline{
+					Inlines: []Inline{
 						InlineText{literal: "b"},
 					},
 				},

@@ -471,13 +471,13 @@ yydefault:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser.go.y:47
 		{
-			yyVAL.block = Line{inlines: []Inline{}}
+			yyVAL.block = Line{Inlines: []Inline{}}
 		}
 	case 6:
 		yyDollar = yyS[yypt-2 : yypt+1]
 		//line parser.go.y:51
 		{
-			yyVAL.block = Line{inlines: yyDollar[1].inlines}
+			yyVAL.block = Line{Inlines: yyDollar[1].inlines}
 		}
 	case 8:
 		yyDollar = yyS[yypt-1 : yypt+1]

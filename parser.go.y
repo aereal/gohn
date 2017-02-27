@@ -45,11 +45,11 @@ block:
 line:
     empty_line
     {
-      $$ = Line{inlines: []Inline{}}
+      $$ = Line{Inlines: []Inline{}}
     }
     | inlines CR
     {
-      $$ = Line{inlines: $1}
+      $$ = Line{Inlines: $1}
     }
 
 empty_line:
