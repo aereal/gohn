@@ -12,8 +12,8 @@ package main
 }
 
 %token<token> TEXT
-%token UNORDERED_LIST_MARKER CR LBRACKET RBRACKET
-%type<block> block unordered_list_item unordered_list line
+%token UNORDERED_LIST_MARKER CR LBRACKET RBRACKET LT GT
+%type<block> block unordered_list_item unordered_list line quotation
 %type<blocks> blocks
 %type<inline> inline inline_text inline_http
 %type<inlines> inlines
@@ -34,6 +34,10 @@ blocks:
 
 block:
         unordered_list
+        {
+          $$ = $1
+        }
+        | quotation
         {
           $$ = $1
         }
@@ -98,5 +102,17 @@ unordered_list_item:
                    {
                     $$ = UnorderedListItem{Inlines: $2}
                    }
+
+quotation:
+         quotation_prefix blocks quotation_suffix
+         {
+          $$ = Quotation{Content: $2}
+         }
+
+quotation_prefix:
+                GT GT CR
+
+quotation_suffix:
+                LT LT CR
 
 %%
