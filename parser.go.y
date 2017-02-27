@@ -9,14 +9,16 @@ package main
   blocks []Block
   inline Inline
   inlines []Inline
+  url string
 }
 
 %token<token> TEXT
-%token UNORDERED_LIST_MARKER CR LBRACKET RBRACKET
-%type<block> block unordered_list_item unordered_list line
+%token UNORDERED_LIST_MARKER CR LBRACKET RBRACKET LT GT
+%type<block> block unordered_list_item unordered_list line quotation
 %type<blocks> blocks
 %type<inline> inline inline_text inline_http
 %type<inlines> inlines
+%type<url> url quotation_prefix
 
 %%
 
@@ -34,6 +36,10 @@ blocks:
 
 block:
         unordered_list
+        {
+          $$ = $1
+        }
+        | quotation
         {
           $$ = $1
         }
@@ -76,10 +82,15 @@ inline_text:
       }
 
 inline_http:
-           LBRACKET TEXT RBRACKET
+           LBRACKET url RBRACKET
            {
-            $$ = InlineHttp{Url: $2.literal}
+            $$ = InlineHttp{Url: $2}
            }
+
+url: TEXT
+   {
+    $$ = $1.literal
+   }
 
 unordered_list:
               unordered_list_item
@@ -98,5 +109,20 @@ unordered_list_item:
                    {
                     $$ = UnorderedListItem{Inlines: $2}
                    }
+
+quotation:
+         quotation_prefix blocks quotation_suffix
+         {
+          $$ = Quotation{Cite: $1, Content: $2}
+         }
+
+quotation_prefix:
+                GT url GT CR
+                {
+                  $$ = $2
+                }
+
+quotation_suffix:
+                LT LT CR
 
 %%

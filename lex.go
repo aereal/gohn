@@ -13,6 +13,8 @@ var symbolTables = map[string]int{
 	string(NEW_LINE): CR,
 	"[":              LBRACKET,
 	"]":              RBRACKET,
+	"<":              LT,
+	">":              GT,
 }
 
 type Block interface{}
@@ -29,6 +31,11 @@ type UnorderedListItem struct {
 
 type Line struct {
 	Inlines []Inline
+}
+
+type Quotation struct {
+	Cite    string
+	Content []Block
 }
 
 type InlineText struct {
