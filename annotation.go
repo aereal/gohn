@@ -12,6 +12,14 @@ type UnorderedListItem struct {
 	Inlines []Inline
 }
 
+type OrderedList struct {
+	Items []OrderedListItem
+}
+
+type OrderedListItem struct {
+	Inlines []Inline
+}
+
 type Line struct {
 	Inlines []Inline
 }

@@ -191,6 +191,20 @@ func TestParser_Parse(t *testing.T) {
 				},
 			},
 		},
+		{
+			input: "+ a\n",
+			result: []Block{
+				OrderedList{
+					Items: []OrderedListItem{
+						OrderedListItem{
+							Inlines: []Inline{
+								InlineText{Literal: "a"},
+							},
+						},
+					},
+				},
+			},
+		},
 	}
 
 	for i, expect := range expectations {

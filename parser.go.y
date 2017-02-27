@@ -13,8 +13,8 @@ package main
 }
 
 %token<token> TEXT
-%token UNORDERED_LIST_MARKER CR LBRACKET RBRACKET LT GT
-%type<block> block unordered_list_item unordered_list line quotation
+%token UNORDERED_LIST_MARKER ORDERED_LIST_MARKER CR LBRACKET RBRACKET LT GT
+%type<block> block unordered_list_item unordered_list ordered_list ordered_list_item line quotation
 %type<blocks> blocks
 %type<inline> inline inline_text inline_http
 %type<inlines> inlines
@@ -36,6 +36,10 @@ blocks:
 
 block:
         unordered_list
+        {
+          $$ = $1
+        }
+        | ordered_list
         {
           $$ = $1
         }
@@ -108,6 +112,25 @@ unordered_list_item:
                    UNORDERED_LIST_MARKER inlines CR
                    {
                     $$ = UnorderedListItem{Inlines: $2}
+                   }
+
+
+ordered_list:
+              ordered_list_item
+              {
+                $$ = OrderedList{Items: []OrderedListItem{$1.(OrderedListItem)}}
+              }
+              | ordered_list_item ordered_list
+              {
+                items := $2.(OrderedList).Items
+                list := OrderedList{Items: append([]OrderedListItem{$1.(OrderedListItem)}, items...)}
+                $$ = list
+              }
+
+ordered_list_item:
+                   ORDERED_LIST_MARKER inlines CR
+                   {
+                    $$ = OrderedListItem{Inlines: $2}
                    }
 
 quotation:
