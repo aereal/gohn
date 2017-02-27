@@ -162,6 +162,34 @@ func TestParser_Parse(t *testing.T) {
 				},
 			},
 		},
+		{
+			input: ">http://example.com/>\na\n- a\n- b\n<<\n",
+			result: []Block{
+				Quotation{
+					Content: []Block{
+						Line{
+							Inlines: []Inline{
+								InlineText{Literal: "a"},
+							},
+						},
+						UnorderedList{
+							Items: []UnorderedListItem{
+								UnorderedListItem{
+									Inlines: []Inline{
+										InlineText{Literal: "a"},
+									},
+								},
+								UnorderedListItem{
+									Inlines: []Inline{
+										InlineText{Literal: "b"},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
 	}
 
 	for i, expect := range expectations {

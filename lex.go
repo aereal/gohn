@@ -34,6 +34,7 @@ type Line struct {
 }
 
 type Quotation struct {
+	Cite    string
 	Content []Block
 }
 

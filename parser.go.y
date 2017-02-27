@@ -18,7 +18,7 @@ package main
 %type<blocks> blocks
 %type<inline> inline inline_text inline_http
 %type<inlines> inlines
-%type<url> url
+%type<url> url quotation_prefix
 
 %%
 
@@ -113,11 +113,14 @@ unordered_list_item:
 quotation:
          quotation_prefix blocks quotation_suffix
          {
-          $$ = Quotation{Content: $2}
+          $$ = Quotation{Cite: $1, Content: $2}
          }
 
 quotation_prefix:
-                GT GT CR
+                GT url GT CR
+                {
+                  $$ = $2
+                }
 
 quotation_suffix:
                 LT LT CR
