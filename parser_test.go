@@ -8,18 +8,21 @@ import (
 )
 
 type expectation struct {
-	input  string
-	result []Block
+	description string
+	input       string
+	result      []Block
 }
 
 func TestParser_Parse(t *testing.T) {
 	var expectations = []expectation{
 		{
-			input: "- a\n",
+			description: "Simple unordered list",
+			input:       "- a\n",
 			result: []Block{
 				UnorderedList{
 					Items: []UnorderedListItem{
 						UnorderedListItem{
+							Depth: 1,
 							Inlines: []Inline{
 								InlineText{Literal: "a"},
 							},
@@ -29,7 +32,8 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
-			input: "a\nb\n",
+			description: "Lines",
+			input:       "a\nb\n",
 			result: []Block{
 				Line{
 					Inlines: []Inline{
@@ -44,7 +48,8 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
-			input: "姉\n弟\n",
+			description: "multibytes",
+			input:       "姉\n弟\n",
 			result: []Block{
 				Line{
 					Inlines: []Inline{
@@ -59,7 +64,8 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
-			input: "[http://example.com/]\n弟\n",
+			description: "Lines with HTTP annotation",
+			input:       "[http://example.com/]\n弟\n",
 			result: []Block{
 				Line{
 					Inlines: []Inline{
@@ -74,16 +80,19 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
-			input: "- a\n- b\na\nb\n",
+			description: "List and Lines",
+			input:       "- a\n- b\na\nb\n",
 			result: []Block{
 				UnorderedList{
 					Items: []UnorderedListItem{
 						UnorderedListItem{
+							Depth: 1,
 							Inlines: []Inline{
 								InlineText{Literal: "a"},
 							},
 						},
 						UnorderedListItem{
+							Depth: 1,
 							Inlines: []Inline{
 								InlineText{Literal: "b"},
 							},
@@ -103,7 +112,8 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
-			input: "a\n\nb\n",
+			description: "Lines with empty line",
+			input:       "a\n\nb\n",
 			result: []Block{
 				Line{
 					Inlines: []Inline{
@@ -121,11 +131,13 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
-			input: "- [http://example.com/]\n",
+			description: "List with http annotation",
+			input:       "- [http://example.com/]\n",
 			result: []Block{
 				UnorderedList{
 					Items: []UnorderedListItem{
 						UnorderedListItem{
+							Depth: 1,
 							Inlines: []Inline{
 								InlineHttp{Url: "http://example.com/"},
 							},
@@ -135,7 +147,8 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
-			input: ">>\na\n- a\n- b\n<<\n",
+			description: "quotation",
+			input:       ">>\na\n- a\n- b\n<<\n",
 			result: []Block{
 				Quotation{
 					Content: []Block{
@@ -147,11 +160,13 @@ func TestParser_Parse(t *testing.T) {
 						UnorderedList{
 							Items: []UnorderedListItem{
 								UnorderedListItem{
+									Depth: 1,
 									Inlines: []Inline{
 										InlineText{Literal: "a"},
 									},
 								},
 								UnorderedListItem{
+									Depth: 1,
 									Inlines: []Inline{
 										InlineText{Literal: "b"},
 									},
@@ -163,7 +178,8 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
-			input: ">http://example.com/>\na\n- a\n- b\n<<\n",
+			description: "quotation with cite",
+			input:       ">http://example.com/>\na\n- a\n- b\n<<\n",
 			result: []Block{
 				Quotation{
 					Cite: "http://example.com/",
@@ -176,11 +192,13 @@ func TestParser_Parse(t *testing.T) {
 						UnorderedList{
 							Items: []UnorderedListItem{
 								UnorderedListItem{
+									Depth: 1,
 									Inlines: []Inline{
 										InlineText{Literal: "a"},
 									},
 								},
 								UnorderedListItem{
+									Depth: 1,
 									Inlines: []Inline{
 										InlineText{Literal: "b"},
 									},
@@ -192,7 +210,8 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
-			input: "+ a\n",
+			description: "ordered list",
+			input:       "+ a\n",
 			result: []Block{
 				OrderedList{
 					Items: []OrderedListItem{
@@ -206,7 +225,8 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
-			input: "+ a\n- b\n",
+			description: "ordered list and unordered list",
+			input:       "+ a\n- b\n",
 			result: []Block{
 				OrderedList{
 					Items: []OrderedListItem{
@@ -220,6 +240,29 @@ func TestParser_Parse(t *testing.T) {
 				UnorderedList{
 					Items: []UnorderedListItem{
 						UnorderedListItem{
+							Depth: 1,
+							Inlines: []Inline{
+								InlineText{Literal: "b"},
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			description: "nested list",
+			input:       "- a\n-- b\n",
+			result: []Block{
+				UnorderedList{
+					Items: []UnorderedListItem{
+						UnorderedListItem{
+							Depth: 1,
+							Inlines: []Inline{
+								InlineText{Literal: "a"},
+							},
+						},
+						UnorderedListItem{
+							Depth: 2,
 							Inlines: []Inline{
 								InlineText{Literal: "b"},
 							},
@@ -233,12 +276,12 @@ func TestParser_Parse(t *testing.T) {
 	for i, expect := range expectations {
 		actual, err := Parse(strings.NewReader(expect.input))
 		if err != nil {
-			t.Errorf("! #%d Failed to parse: %#v", i, err)
+			t.Errorf("! #%d %v: Failed to parse: %#v", i, expect.description, err)
 			continue
 		}
 		ok, msg := matchResult(expect.result, actual)
 		if !ok {
-			t.Error(msg)
+			t.Errorf("! #%d %v: %v", i, expect.description, msg)
 			continue
 		}
 	}
