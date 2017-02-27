@@ -43,10 +43,17 @@ block:
         }
 
 line:
-    inlines CR
+    empty_line
+    {
+      $$ = Line{inlines: []Inline{}}
+    }
+    | inlines CR
     {
       $$ = Line{inlines: $1}
     }
+
+empty_line:
+          CR
 
 inlines:
        inline

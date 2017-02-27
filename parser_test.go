@@ -90,6 +90,24 @@ func TestParser_Parse(t *testing.T) {
 				},
 			},
 		},
+		{
+			input: "a\n\nb\n",
+			result: []Block{
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "a"},
+					},
+				},
+				Line{
+					inlines: []Inline{},
+				},
+				Line{
+					inlines: []Inline{
+						InlineText{literal: "b"},
+					},
+				},
+			},
+		},
 	}
 
 	for i, expect := range expectations {
