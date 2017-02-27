@@ -18,8 +18,8 @@ func TestParser_Parse(t *testing.T) {
 			input: "- a\n",
 			result: []Block{
 				UnorderedList{
-					items: []UnorderedListItem{
-						UnorderedListItem{text: "a"},
+					Items: []UnorderedListItem{
+						UnorderedListItem{Text: "a"},
 					},
 				},
 			},
@@ -28,13 +28,13 @@ func TestParser_Parse(t *testing.T) {
 			input: "a\nb\n",
 			result: []Block{
 				Line{
-					inlines: []Inline{
-						InlineText{literal: "a"},
+					Inlines: []Inline{
+						InlineText{Literal: "a"},
 					},
 				},
 				Line{
-					inlines: []Inline{
-						InlineText{literal: "b"},
+					Inlines: []Inline{
+						InlineText{Literal: "b"},
 					},
 				},
 			},
@@ -43,13 +43,13 @@ func TestParser_Parse(t *testing.T) {
 			input: "姉\n弟\n",
 			result: []Block{
 				Line{
-					inlines: []Inline{
-						InlineText{literal: "姉"},
+					Inlines: []Inline{
+						InlineText{Literal: "姉"},
 					},
 				},
 				Line{
-					inlines: []Inline{
-						InlineText{literal: "弟"},
+					Inlines: []Inline{
+						InlineText{Literal: "弟"},
 					},
 				},
 			},
@@ -58,13 +58,13 @@ func TestParser_Parse(t *testing.T) {
 			input: "[http://example.com/]\n弟\n",
 			result: []Block{
 				Line{
-					inlines: []Inline{
-						InlineHttp{url: "http://example.com/"},
+					Inlines: []Inline{
+						InlineHttp{Url: "http://example.com/"},
 					},
 				},
 				Line{
-					inlines: []Inline{
-						InlineText{literal: "弟"},
+					Inlines: []Inline{
+						InlineText{Literal: "弟"},
 					},
 				},
 			},
@@ -73,19 +73,19 @@ func TestParser_Parse(t *testing.T) {
 			input: "- a\n- b\na\nb\n",
 			result: []Block{
 				UnorderedList{
-					items: []UnorderedListItem{
-						UnorderedListItem{text: "a"},
-						UnorderedListItem{text: "b"},
+					Items: []UnorderedListItem{
+						UnorderedListItem{Text: "a"},
+						UnorderedListItem{Text: "b"},
 					},
 				},
 				Line{
-					inlines: []Inline{
-						InlineText{literal: "a"},
+					Inlines: []Inline{
+						InlineText{Literal: "a"},
 					},
 				},
 				Line{
-					inlines: []Inline{
-						InlineText{literal: "b"},
+					Inlines: []Inline{
+						InlineText{Literal: "b"},
 					},
 				},
 			},
@@ -94,16 +94,16 @@ func TestParser_Parse(t *testing.T) {
 			input: "a\n\nb\n",
 			result: []Block{
 				Line{
-					inlines: []Inline{
-						InlineText{literal: "a"},
+					Inlines: []Inline{
+						InlineText{Literal: "a"},
 					},
 				},
 				Line{
-					inlines: []Inline{},
+					Inlines: []Inline{},
 				},
 				Line{
-					inlines: []Inline{
-						InlineText{literal: "b"},
+					Inlines: []Inline{
+						InlineText{Literal: "b"},
 					},
 				},
 			},

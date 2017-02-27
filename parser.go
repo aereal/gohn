@@ -471,13 +471,13 @@ yydefault:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser.go.y:47
 		{
-			yyVAL.block = Line{inlines: []Inline{}}
+			yyVAL.block = Line{Inlines: []Inline{}}
 		}
 	case 6:
 		yyDollar = yyS[yypt-2 : yypt+1]
 		//line parser.go.y:51
 		{
-			yyVAL.block = Line{inlines: yyDollar[1].inlines}
+			yyVAL.block = Line{Inlines: yyDollar[1].inlines}
 		}
 	case 8:
 		yyDollar = yyS[yypt-1 : yypt+1]
@@ -495,33 +495,33 @@ yydefault:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser.go.y:74
 		{
-			yyVAL.inline = InlineText{literal: yyDollar[1].token.literal}
+			yyVAL.inline = InlineText{Literal: yyDollar[1].token.literal}
 		}
 	case 13:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		//line parser.go.y:80
 		{
-			yyVAL.inline = InlineHttp{url: yyDollar[2].token.literal}
+			yyVAL.inline = InlineHttp{Url: yyDollar[2].token.literal}
 		}
 	case 14:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser.go.y:86
 		{
-			yyVAL.block = UnorderedList{items: []UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}}
+			yyVAL.block = UnorderedList{Items: []UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}}
 		}
 	case 15:
 		yyDollar = yyS[yypt-2 : yypt+1]
 		//line parser.go.y:90
 		{
-			items := yyDollar[2].block.(UnorderedList).items
-			list := UnorderedList{items: append([]UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}, items...)}
+			items := yyDollar[2].block.(UnorderedList).Items
+			list := UnorderedList{Items: append([]UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}, items...)}
 			yyVAL.block = list
 		}
 	case 16:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		//line parser.go.y:98
 		{
-			yyVAL.block = UnorderedListItem{text: yyDollar[2].token.literal}
+			yyVAL.block = UnorderedListItem{Text: yyDollar[2].token.literal}
 		}
 	}
 	goto yystack /* stack new state and value */

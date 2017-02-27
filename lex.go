@@ -20,24 +20,23 @@ type Block interface{}
 type Inline interface{}
 
 type UnorderedList struct {
-	items []UnorderedListItem
+	Items []UnorderedListItem
 }
 
 type UnorderedListItem struct {
-	text string
+	Text string
 }
 
 type Line struct {
-	text    string
-	inlines []Inline
+	Inlines []Inline
 }
 
 type InlineText struct {
-	literal string
+	Literal string
 }
 
 type InlineHttp struct {
-	url string
+	Url string
 }
 
 type Token struct {

@@ -45,11 +45,11 @@ block:
 line:
     empty_line
     {
-      $$ = Line{inlines: []Inline{}}
+      $$ = Line{Inlines: []Inline{}}
     }
     | inlines CR
     {
-      $$ = Line{inlines: $1}
+      $$ = Line{Inlines: $1}
     }
 
 empty_line:
@@ -72,31 +72,31 @@ inline:
 inline_text:
       TEXT
       {
-        $$ = InlineText{literal: $1.literal}
+        $$ = InlineText{Literal: $1.literal}
       }
 
 inline_http:
            LBRACKET TEXT RBRACKET
            {
-            $$ = InlineHttp{url: $2.literal}
+            $$ = InlineHttp{Url: $2.literal}
            }
 
 unordered_list:
               unordered_list_item
               {
-                $$ = UnorderedList{items: []UnorderedListItem{$1.(UnorderedListItem)}}
+                $$ = UnorderedList{Items: []UnorderedListItem{$1.(UnorderedListItem)}}
               }
               | unordered_list_item unordered_list
               {
-                items := $2.(UnorderedList).items
-                list := UnorderedList{items: append([]UnorderedListItem{$1.(UnorderedListItem)}, items...)}
+                items := $2.(UnorderedList).Items
+                list := UnorderedList{Items: append([]UnorderedListItem{$1.(UnorderedListItem)}, items...)}
                 $$ = list
               }
 
 unordered_list_item:
                    UNORDERED_LIST_MARKER TEXT CR
                    {
-                    $$ = UnorderedListItem{text: $2.literal}
+                    $$ = UnorderedListItem{Text: $2.literal}
                    }
 
 %%

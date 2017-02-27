@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"io"
@@ -25,7 +26,16 @@ func (cli *CLI) Run(args []string) int {
 		fmt.Printf("! Error: %#v\n", err)
 		return 1
 	} else {
-		fmt.Printf("%#v\n", result)
-		return 0
+		if jsonBytes, err := json.Marshal(result); err != nil {
+			fmt.Printf("! Error: %#v\n", err)
+			return 1
+		} else {
+			if _, err := cli.outStream.Write(jsonBytes); err != nil {
+				fmt.Printf("! Error: %#v\n", err)
+				return 1
+			} else {
+				return 0
+			}
+		}
 	}
 }
