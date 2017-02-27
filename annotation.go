@@ -9,6 +9,7 @@ type UnorderedList struct {
 }
 
 type UnorderedListItem struct {
+	Depth   int
 	Inlines []Inline
 }
 

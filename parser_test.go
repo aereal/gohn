@@ -20,6 +20,7 @@ func TestParser_Parse(t *testing.T) {
 				UnorderedList{
 					Items: []UnorderedListItem{
 						UnorderedListItem{
+							Depth: 1,
 							Inlines: []Inline{
 								InlineText{Literal: "a"},
 							},
@@ -79,11 +80,13 @@ func TestParser_Parse(t *testing.T) {
 				UnorderedList{
 					Items: []UnorderedListItem{
 						UnorderedListItem{
+							Depth: 1,
 							Inlines: []Inline{
 								InlineText{Literal: "a"},
 							},
 						},
 						UnorderedListItem{
+							Depth: 1,
 							Inlines: []Inline{
 								InlineText{Literal: "b"},
 							},
@@ -126,6 +129,7 @@ func TestParser_Parse(t *testing.T) {
 				UnorderedList{
 					Items: []UnorderedListItem{
 						UnorderedListItem{
+							Depth: 1,
 							Inlines: []Inline{
 								InlineHttp{Url: "http://example.com/"},
 							},
@@ -147,11 +151,13 @@ func TestParser_Parse(t *testing.T) {
 						UnorderedList{
 							Items: []UnorderedListItem{
 								UnorderedListItem{
+									Depth: 1,
 									Inlines: []Inline{
 										InlineText{Literal: "a"},
 									},
 								},
 								UnorderedListItem{
+									Depth: 1,
 									Inlines: []Inline{
 										InlineText{Literal: "b"},
 									},
@@ -176,11 +182,13 @@ func TestParser_Parse(t *testing.T) {
 						UnorderedList{
 							Items: []UnorderedListItem{
 								UnorderedListItem{
+									Depth: 1,
 									Inlines: []Inline{
 										InlineText{Literal: "a"},
 									},
 								},
 								UnorderedListItem{
+									Depth: 1,
 									Inlines: []Inline{
 										InlineText{Literal: "b"},
 									},
@@ -220,6 +228,28 @@ func TestParser_Parse(t *testing.T) {
 				UnorderedList{
 					Items: []UnorderedListItem{
 						UnorderedListItem{
+							Depth: 1,
+							Inlines: []Inline{
+								InlineText{Literal: "b"},
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			input: "- a\n-- b\n",
+			result: []Block{
+				UnorderedList{
+					Items: []UnorderedListItem{
+						UnorderedListItem{
+							Depth: 1,
+							Inlines: []Inline{
+								InlineText{Literal: "a"},
+							},
+						},
+						UnorderedListItem{
+							Depth: 2,
 							Inlines: []Inline{
 								InlineText{Literal: "b"},
 							},

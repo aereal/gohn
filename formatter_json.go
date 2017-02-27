@@ -18,9 +18,11 @@ func (uli UnorderedListItem) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Name    string
 		Inlines []Inline
+		Depth   int
 	}{
 		Name:    "UnorderedListItem",
 		Inlines: uli.Inlines,
+		Depth:   uli.Depth,
 	})
 }
 

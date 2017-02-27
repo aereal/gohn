@@ -10,6 +10,7 @@ package main
   inline Inline
   inlines []Inline
   url string
+  depth int
 }
 
 %token<token> TEXT
@@ -19,6 +20,7 @@ package main
 %type<inline> inline inline_text inline_http
 %type<inlines> inlines
 %type<url> url quotation_prefix
+%type<depth> unordered_list_markers
 
 %%
 
@@ -109,11 +111,24 @@ unordered_list:
               }
 
 unordered_list_item:
-                   UNORDERED_LIST_MARKER inlines CR
+                   unordered_list_markers inlines CR
                    {
-                    $$ = UnorderedListItem{Inlines: $2}
+                    $$ = UnorderedListItem{Depth: $1, Inlines: $2}
                    }
 
+unordered_list_markers:
+                     unordered_list_marker
+                     {
+                      $$ = 1
+                     }
+                     | unordered_list_marker unordered_list_markers
+                     {
+                      $$ = $2 + 1
+                     }
+
+
+unordered_list_marker:
+                     UNORDERED_LIST_MARKER
 
 ordered_list:
               ordered_list_item
