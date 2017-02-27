@@ -78,7 +78,7 @@ inline_text:
 inline_http:
            LBRACKET TEXT RBRACKET
            {
-            $$ = InlineHttp{url: $2.literal}
+            $$ = InlineHttp{Url: $2.literal}
            }
 
 unordered_list:

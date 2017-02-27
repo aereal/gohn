@@ -59,7 +59,7 @@ func TestParser_Parse(t *testing.T) {
 			result: []Block{
 				Line{
 					Inlines: []Inline{
-						InlineHttp{url: "http://example.com/"},
+						InlineHttp{Url: "http://example.com/"},
 					},
 				},
 				Line{

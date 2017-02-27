@@ -36,7 +36,7 @@ type InlineText struct {
 }
 
 type InlineHttp struct {
-	url string
+	Url string
 }
 
 type Token struct {

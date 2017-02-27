@@ -501,7 +501,7 @@ yydefault:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		//line parser.go.y:80
 		{
-			yyVAL.inline = InlineHttp{url: yyDollar[2].token.literal}
+			yyVAL.inline = InlineHttp{Url: yyDollar[2].token.literal}
 		}
 	case 14:
 		yyDollar = yyS[yypt-1 : yypt+1]
