@@ -28,7 +28,6 @@ type UnorderedListItem struct {
 }
 
 type Line struct {
-	text    string
 	inlines []Inline
 }
 
