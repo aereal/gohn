@@ -20,7 +20,7 @@ type Block interface{}
 type Inline interface{}
 
 type UnorderedList struct {
-	items []UnorderedListItem
+	Items []UnorderedListItem
 }
 
 type UnorderedListItem struct {

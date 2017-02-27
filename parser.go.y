@@ -84,12 +84,12 @@ inline_http:
 unordered_list:
               unordered_list_item
               {
-                $$ = UnorderedList{items: []UnorderedListItem{$1.(UnorderedListItem)}}
+                $$ = UnorderedList{Items: []UnorderedListItem{$1.(UnorderedListItem)}}
               }
               | unordered_list_item unordered_list
               {
-                items := $2.(UnorderedList).items
-                list := UnorderedList{items: append([]UnorderedListItem{$1.(UnorderedListItem)}, items...)}
+                items := $2.(UnorderedList).Items
+                list := UnorderedList{Items: append([]UnorderedListItem{$1.(UnorderedListItem)}, items...)}
                 $$ = list
               }
 

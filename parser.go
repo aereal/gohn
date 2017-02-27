@@ -507,14 +507,14 @@ yydefault:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser.go.y:86
 		{
-			yyVAL.block = UnorderedList{items: []UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}}
+			yyVAL.block = UnorderedList{Items: []UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}}
 		}
 	case 15:
 		yyDollar = yyS[yypt-2 : yypt+1]
 		//line parser.go.y:90
 		{
-			items := yyDollar[2].block.(UnorderedList).items
-			list := UnorderedList{items: append([]UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}, items...)}
+			items := yyDollar[2].block.(UnorderedList).Items
+			list := UnorderedList{Items: append([]UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}, items...)}
 			yyVAL.block = list
 		}
 	case 16:

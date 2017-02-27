@@ -18,7 +18,7 @@ func TestParser_Parse(t *testing.T) {
 			input: "- a\n",
 			result: []Block{
 				UnorderedList{
-					items: []UnorderedListItem{
+					Items: []UnorderedListItem{
 						UnorderedListItem{text: "a"},
 					},
 				},
@@ -73,7 +73,7 @@ func TestParser_Parse(t *testing.T) {
 			input: "- a\n- b\na\nb\n",
 			result: []Block{
 				UnorderedList{
-					items: []UnorderedListItem{
+					Items: []UnorderedListItem{
 						UnorderedListItem{text: "a"},
 						UnorderedListItem{text: "b"},
 					},
