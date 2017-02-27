@@ -11,6 +11,7 @@ const EOF = -1
 
 var symbolTables = map[string]int{
 	"-":              UNORDERED_LIST_MARKER,
+	"+":              ORDERED_LIST_MARKER,
 	string(NEW_LINE): CR,
 	"[":              LBRACKET,
 	"]":              RBRACKET,
@@ -29,6 +30,8 @@ func (t Token) Name() string {
 		return "TEXT"
 	case UNORDERED_LIST_MARKER:
 		return "UNORDERED_LIST_MARKER"
+	case ORDERED_LIST_MARKER:
+		return "ORDERED_LIST_MARKER"
 	case CR:
 		return "CR"
 	case LBRACKET:
