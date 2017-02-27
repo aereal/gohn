@@ -521,7 +521,7 @@ yydefault:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		//line parser.go.y:98
 		{
-			yyVAL.block = UnorderedListItem{text: yyDollar[2].token.literal}
+			yyVAL.block = UnorderedListItem{Text: yyDollar[2].token.literal}
 		}
 	}
 	goto yystack /* stack new state and value */

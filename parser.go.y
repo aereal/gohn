@@ -96,7 +96,7 @@ unordered_list:
 unordered_list_item:
                    UNORDERED_LIST_MARKER TEXT CR
                    {
-                    $$ = UnorderedListItem{text: $2.literal}
+                    $$ = UnorderedListItem{Text: $2.literal}
                    }
 
 %%

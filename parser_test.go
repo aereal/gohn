@@ -19,7 +19,7 @@ func TestParser_Parse(t *testing.T) {
 			result: []Block{
 				UnorderedList{
 					Items: []UnorderedListItem{
-						UnorderedListItem{text: "a"},
+						UnorderedListItem{Text: "a"},
 					},
 				},
 			},
@@ -74,8 +74,8 @@ func TestParser_Parse(t *testing.T) {
 			result: []Block{
 				UnorderedList{
 					Items: []UnorderedListItem{
-						UnorderedListItem{text: "a"},
-						UnorderedListItem{text: "b"},
+						UnorderedListItem{Text: "a"},
+						UnorderedListItem{Text: "b"},
 					},
 				},
 				Line{
