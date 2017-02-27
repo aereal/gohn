@@ -121,6 +121,10 @@ quotation_prefix:
                 {
                   $$ = $2
                 }
+                | GT GT CR
+                {
+                  $$ = ""
+                }
 
 quotation_suffix:
                 LT LT CR
