@@ -7,6 +7,7 @@ import (
 )
 
 const NEW_LINE = '\n'
+const EOF = -1
 
 var symbolTables = map[string]int{
 	"-":              UNORDERED_LIST_MARKER,
@@ -49,6 +50,29 @@ type InlineHttp struct {
 type Token struct {
 	token   int
 	literal string
+}
+
+func (t Token) Name() string {
+	switch t.token {
+	case TEXT:
+		return "TEXT"
+	case UNORDERED_LIST_MARKER:
+		return "UNORDERED_LIST_MARKER"
+	case CR:
+		return "CR"
+	case LBRACKET:
+		return "LBRACKET"
+	case RBRACKET:
+		return "RBRACKET"
+	case LT:
+		return "LT"
+	case GT:
+		return "GT"
+	case EOF:
+		return "EOF"
+	default:
+		return "UNKNOWN"
+	}
 }
 
 type Lexer struct {
