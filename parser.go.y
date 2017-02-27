@@ -9,6 +9,7 @@ package main
   blocks []Block
   inline Inline
   inlines []Inline
+  url string
 }
 
 %token<token> TEXT
@@ -17,6 +18,7 @@ package main
 %type<blocks> blocks
 %type<inline> inline inline_text inline_http
 %type<inlines> inlines
+%type<url> url
 
 %%
 
@@ -80,10 +82,15 @@ inline_text:
       }
 
 inline_http:
-           LBRACKET TEXT RBRACKET
+           LBRACKET url RBRACKET
            {
-            $$ = InlineHttp{Url: $2.literal}
+            $$ = InlineHttp{Url: $2}
            }
+
+url: TEXT
+   {
+    $$ = $1.literal
+   }
 
 unordered_list:
               unordered_list_item
