@@ -25,6 +25,7 @@ const RBRACKET = 57351
 const LT = 57352
 const GT = 57353
 const HEADING_MARKER = 57354
+const COLON = 57355
 
 var yyToknames = [...]string{
 	"$end",
@@ -39,6 +40,7 @@ var yyToknames = [...]string{
 	"LT",
 	"GT",
 	"HEADING_MARKER",
+	"COLON",
 }
 var yyStatenames = [...]string{}
 
@@ -126,7 +128,7 @@ var yyTok1 = [...]int{
 var yyTok2 = [...]int{
 
 	2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-	12,
+	12, 13,
 }
 var yyTok3 = [...]int{
 	0,

@@ -14,7 +14,7 @@ package main
 }
 
 %token<token> TEXT
-%token UNORDERED_LIST_MARKER ORDERED_LIST_MARKER CR LBRACKET RBRACKET LT GT HEADING_MARKER
+%token UNORDERED_LIST_MARKER ORDERED_LIST_MARKER CR LBRACKET RBRACKET LT GT HEADING_MARKER COLON
 %type<block> block unordered_list_item unordered_list ordered_list ordered_list_item line quotation heading
 %type<blocks> blocks
 %type<inline> inline inline_text inline_http

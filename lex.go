@@ -56,6 +56,7 @@ type Lexer struct {
 	scanner.Scanner
 	result []Block
 	err    *ParseError
+	inHttp bool
 }
 
 type ParseError struct {
@@ -87,6 +88,7 @@ func NewLexer(in io.Reader) *Lexer {
 	l.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanStrings | scanner.ScanComments | scanner.SkipComments
 	l.IsIdentRune = isIdent
 	l.Whitespace = 1<<' ' | 1<<'\t'
+	l.inHttp = false
 	return l
 }
 
@@ -100,9 +102,14 @@ func (l *Lexer) Lex(lval *yySymType) int {
 	l.skipBlank()
 	ch := l.Peek()
 	if isReserved(ch) {
-		_ = l.Next()
 		s := string(ch)
 		token := symbolTables[s]
+		if token == LBRACKET {
+			l.inHttp = true
+		} else if token == RBRACKET {
+			l.inHttp = false
+		}
+		_ = l.Next()
 		lval.token = Token{token: token, literal: s}
 		return token
 	} else {
