@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "Schema for Hatena Notation AST",
+  "type": "object",
+  "properties": {
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/node"
+      }
+    }
+  },
+  "definitions": {
+    "node": {
+      "enum": [
+        { "$ref": "#/definitions/blockNode" },
+        { "$ref": "#/definitions/inlineNode" }
+      ]
+    },
+    "inlineNode": {
+      "enum": [
+        { "$ref": "#/definitions/textNode" },
+        { "$ref": "#/definitions/httpNode" }
+      ]
+    },
+    "blockNode": {
+      "enum": [
+        { "$ref": "#/definitions/lineNode" },
+        { "$ref": "#/definitions/headingNode" },
+        { "$ref": "#/definitions/unorderedListNode" },
+        { "$ref": "#/definitions/orderedListNode" },
+        { "$ref": "#/definitions/quotationNode" }
+      ]
+    },
+    "lineNode": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/inlineNode" }
+        }
+      },
+      "required": ["nodes"]
+    },
+    "headingNode": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/inlineNode" }
+        },
+        "level": {
+          "type": "number",
+          "minimum": 1
+        }
+      },
+      "required": ["nodes", "level"]
+    },
+    "unorderedListNode": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/unorderedListItemNode" }
+        }
+      },
+      "required": ["items"]
+    },
+    "unorderedListItemNode": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/inlineNode" }
+        },
+        "depth": {
+          "type": "number",
+          "minimum": 1
+        }
+      },
+      "required": ["nodes", "depth"]
+    },
+    "orderedListNode": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/orderedListItemNode" }
+        }
+      },
+      "required": ["items"]
+    },
+    "orderedListItemNode": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/inlineNode" }
+        },
+        "depth": {
+          "type": "number",
+          "minimum": 1
+        }
+      },
+      "required": ["nodes", "depth"]
+    },
+    "quotationNode": {
+      "type": "object",
+      "properties": {
+        "cite": {
+          "$ref": "#/definitions/reference"
+        },
+        "nodes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/node" } }
+      },
+      "required": ["nodes", "cite"]
+    },
+    "httpNode": {
+      "type": "object",
+      "properties": {
+        "reference": { "$ref": "#/definitions/reference" }
+      },
+      "required": ["reference"]
+    },
+    "textNode": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": ["value"]
+    },
+    "reference": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["url"]
+    }
+  }
+}
