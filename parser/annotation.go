@@ -1,5 +1,6 @@
-package main
+package parser
 
+// Block is ...
 type Block interface{}
 
 type Inline interface{}
