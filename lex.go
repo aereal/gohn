@@ -18,6 +18,7 @@ var symbolTables = map[string]int{
 	"<":              LT,
 	">":              GT,
 	"*":              HEADING_MARKER,
+	":":              COLON,
 }
 
 type Token struct {
@@ -47,6 +48,8 @@ func (t Token) Name() string {
 		return "HEADING_MARKER"
 	case EOF:
 		return "EOF"
+	case COLON:
+		return "COLON"
 	default:
 		return "UNKNOWN"
 	}
@@ -54,9 +57,10 @@ func (t Token) Name() string {
 
 type Lexer struct {
 	scanner.Scanner
-	result []Block
-	err    *ParseError
-	inHttp bool
+	result    []Block
+	err       *ParseError
+	inHttp    bool
+	seenColon bool
 }
 
 type ParseError struct {
@@ -80,6 +84,7 @@ func NewLexer(in io.Reader) *Lexer {
 	l.IsIdentRune = l.isIdent
 	l.Whitespace = 1<<' ' | 1<<'\t'
 	l.inHttp = false
+	l.seenColon = false
 	return l
 }
 
@@ -88,8 +93,22 @@ func (l *Lexer) isIdent(ch rune, size int) bool {
 }
 
 func (l *Lexer) isReserved(ch rune) bool {
-	_, ok := symbolTables[string(ch)]
-	return ok
+	token, ok := symbolTables[string(ch)]
+	if ok {
+		switch token {
+		case COLON:
+			if !l.seenColon {
+				l.seenColon = true
+				return false // maybe part of URL
+			} else {
+				return true
+			}
+		default:
+			return true
+		}
+	} else {
+		return false
+	}
 }
 
 func (l *Lexer) skipBlank() {
@@ -106,8 +125,10 @@ func (l *Lexer) Lex(lval *yySymType) int {
 		token := symbolTables[s]
 		if token == LBRACKET {
 			l.inHttp = true
+			l.seenColon = false // reset
 		} else if token == RBRACKET {
 			l.inHttp = false
+			l.seenColon = false // reset
 		}
 		_ = l.Next()
 		lval.token = Token{token: token, literal: s}

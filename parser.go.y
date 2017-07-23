@@ -10,6 +10,8 @@ package main
   inline Inline
   inlines []Inline
   url string
+  http_option string
+  http_options HttpOptions
   depth int
 }
 
@@ -20,6 +22,8 @@ package main
 %type<inline> inline inline_text inline_http
 %type<inlines> inlines
 %type<url> url quotation_prefix
+%type<http_options> http_options
+%type<http_option> http_option
 %type<depth> unordered_list_markers
 %type<depth> heading_prefix
 
@@ -97,11 +101,31 @@ inline_http:
            {
             $$ = InlineHttp{Url: $2}
            }
+           | LBRACKET url http_options RBRACKET
+           {
+            $$ = InlineHttp{Url: $2, Options: $3}
+           }
 
 url: TEXT
    {
     $$ = $1.literal
    }
+
+http_options:
+  http_option
+  {
+    $$ = []string{$1}
+  }
+  | http_option http_options
+  {
+    options := $2
+    $$ = append([]string{$1}, options...)
+  }
+
+http_option: COLON TEXT
+  {
+    $$ = $2.literal
+  }
 
 unordered_list:
               unordered_list_item

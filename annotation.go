@@ -40,5 +40,8 @@ type InlineText struct {
 }
 
 type InlineHttp struct {
-	Url string
+	Url     string
+	Options HttpOptions
 }
+
+type HttpOptions []string

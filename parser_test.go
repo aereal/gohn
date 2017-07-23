@@ -80,6 +80,25 @@ func TestParser_Parse(t *testing.T) {
 			},
 		},
 		{
+			description: "HTTP annotation with :title option",
+			input:       "[http://example.com/:title=example]\n弟\n",
+			result: []Block{
+				Line{
+					Inlines: []Inline{
+						InlineHttp{
+							Url:     "http://example.com/",
+							Options: []string{"title=example"},
+						},
+					},
+				},
+				Line{
+					Inlines: []Inline{
+						InlineText{Literal: "弟"},
+					},
+				},
+			},
+		},
+		{
 			description: "List and Lines",
 			input:       "- a\n- b\na\nb\n",
 			result: []Block{
