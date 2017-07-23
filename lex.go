@@ -69,15 +69,6 @@ func (e *ParseError) Error() string {
 	return e.Message
 }
 
-func isIdent(ch rune, size int) bool {
-	return unicode.IsGraphic(ch) && !isReserved(ch) && !unicode.IsSpace(ch)
-}
-
-func isReserved(ch rune) bool {
-	_, ok := symbolTables[string(ch)]
-	return ok
-}
-
 func isWhitespace(ch rune) bool {
 	return unicode.IsSpace(ch) && ch != rune(NEW_LINE)
 }
@@ -86,10 +77,19 @@ func NewLexer(in io.Reader) *Lexer {
 	l := new(Lexer)
 	l.Init(in)
 	l.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanStrings | scanner.ScanComments | scanner.SkipComments
-	l.IsIdentRune = isIdent
+	l.IsIdentRune = l.isIdent
 	l.Whitespace = 1<<' ' | 1<<'\t'
 	l.inHttp = false
 	return l
+}
+
+func (l *Lexer) isIdent(ch rune, size int) bool {
+	return unicode.IsGraphic(ch) && !l.isReserved(ch) && !unicode.IsSpace(ch)
+}
+
+func (l *Lexer) isReserved(ch rune) bool {
+	_, ok := symbolTables[string(ch)]
+	return ok
 }
 
 func (l *Lexer) skipBlank() {
@@ -101,7 +101,7 @@ func (l *Lexer) skipBlank() {
 func (l *Lexer) Lex(lval *yySymType) int {
 	l.skipBlank()
 	ch := l.Peek()
-	if isReserved(ch) {
+	if l.isReserved(ch) {
 		s := string(ch)
 		token := symbolTables[s]
 		if token == LBRACKET {
