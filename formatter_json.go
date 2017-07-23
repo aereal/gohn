@@ -75,7 +75,7 @@ func (ih InlineHttp) MarshalJSON() ([]byte, error) {
 		Options HttpOptions
 	}{
 		Name:    "InlineHttp",
-		Url:     ih.Url,
-		Options: ih.Options,
+		Url:     ih.Reference.Url,
+		Options: ih.Reference.Options,
 	})
 }

@@ -12,6 +12,7 @@ package main
   url string
   http_option string
   http_options HttpOptions
+  reference Reference
   depth int
 }
 
@@ -24,6 +25,7 @@ package main
 %type<url> url quotation_prefix
 %type<http_options> http_options
 %type<http_option> http_option
+%type<reference> reference
 %type<depth> unordered_list_markers
 %type<depth> heading_prefix
 
@@ -97,14 +99,20 @@ inline_text:
       }
 
 inline_http:
-           LBRACKET url RBRACKET
+           LBRACKET reference RBRACKET
            {
-            $$ = InlineHttp{Url: $2}
+            $$ = InlineHttp{Reference: $2}
            }
-           | LBRACKET url http_options RBRACKET
-           {
-            $$ = InlineHttp{Url: $2, Options: $3}
-           }
+
+reference:
+  url
+  {
+    $$ = Reference{Url: $1}
+  }
+  | url http_options
+  {
+    $$ = Reference{Url: $1, Options: $2}
+  }
 
 url: TEXT
    {

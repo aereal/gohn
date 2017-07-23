@@ -15,6 +15,7 @@ type yySymType struct {
 	url          string
 	http_option  string
 	http_options HttpOptions
+	reference    Reference
 	depth        int
 }
 
@@ -50,7 +51,7 @@ const yyEofCode = 1
 const yyErrCode = 2
 const yyInitialStackSize = 16
 
-//line parser.go.y:215
+//line parser.go.y:223
 
 //line yacctab:1
 var yyExca = [...]int{
@@ -59,70 +60,70 @@ var yyExca = [...]int{
 	-2, 0,
 }
 
-const yyNprod = 38
+const yyNprod = 39
 const yyPrivate = 57344
 
 var yyTokenNames []string
 var yyStates []string
 
-const yyLast = 64
+const yyLast = 63
 
 var yyAct = [...]int{
 
-	49, 34, 13, 14, 25, 23, 15, 18, 24, 11,
-	51, 16, 17, 17, 30, 48, 36, 32, 33, 51,
-	46, 52, 38, 35, 39, 1, 40, 37, 26, 42,
-	4, 54, 3, 25, 57, 53, 29, 24, 47, 45,
-	28, 27, 44, 43, 31, 15, 23, 56, 36, 41,
-	20, 55, 12, 50, 10, 21, 22, 19, 6, 5,
-	7, 9, 8, 2,
+	50, 34, 13, 14, 25, 23, 15, 18, 24, 11,
+	52, 16, 17, 17, 30, 47, 36, 32, 33, 53,
+	43, 4, 38, 35, 39, 1, 41, 37, 26, 49,
+	25, 28, 3, 15, 24, 57, 29, 54, 48, 46,
+	45, 27, 44, 31, 23, 56, 36, 42, 20, 12,
+	40, 51, 55, 10, 21, 22, 19, 6, 5, 7,
+	9, 8, 2,
 }
 var yyPact = [...]int{
 
-	0, -1000, 0, -1000, -1000, -1000, -1000, -1000, 41, 39,
-	0, 29, -1000, 37, 29, 29, 12, 1, -1000, 29,
-	41, -1000, -1000, -1000, 44, -1000, -1000, -1000, -1000, 19,
-	36, -1000, 35, 32, 9, 31, -1000, -1000, -1000, -1000,
-	6, -1000, 11, -1000, -1000, -1000, 28, -1000, -1000, 22,
-	-3, 43, 27, -1000, -1000, -1000, -1000, -1000,
+	0, -1000, 0, -1000, -1000, -1000, -1000, -1000, 39, 27,
+	0, 26, -1000, 36, 26, 26, 12, 1, -1000, 26,
+	39, -1000, -1000, -1000, 42, -1000, -1000, -1000, -1000, 10,
+	35, -1000, 33, 32, 4, 31, -1000, -1000, -1000, -1000,
+	20, -3, -1000, 9, -1000, -1000, -1000, 30, -1000, -1000,
+	-1000, -3, 41, 28, -1000, -1000, -1000, -1000,
 }
 var yyPgo = [...]int{
 
-	0, 63, 62, 32, 30, 61, 60, 59, 58, 25,
-	57, 56, 55, 2, 1, 54, 0, 53, 3, 9,
-	52, 50, 49,
+	0, 62, 61, 32, 21, 60, 59, 58, 57, 25,
+	56, 55, 54, 2, 1, 53, 0, 51, 50, 3,
+	9, 49, 48, 47,
 }
 var yyR1 = [...]int{
 
 	0, 9, 9, 1, 1, 1, 1, 1, 6, 6,
-	20, 13, 13, 10, 10, 11, 12, 12, 14, 16,
-	16, 17, 3, 3, 2, 18, 18, 21, 4, 4,
-	5, 7, 15, 15, 22, 8, 19, 19,
+	21, 13, 13, 10, 10, 11, 12, 18, 18, 14,
+	16, 16, 17, 3, 3, 2, 19, 19, 22, 4,
+	4, 5, 7, 15, 15, 23, 8, 20, 20,
 }
 var yyR2 = [...]int{
 
 	0, 1, 2, 1, 1, 1, 1, 1, 1, 2,
-	1, 1, 2, 1, 1, 1, 3, 4, 1, 1,
-	2, 2, 1, 2, 3, 1, 2, 1, 1, 2,
-	3, 3, 4, 3, 3, 3, 1, 2,
+	1, 1, 2, 1, 1, 1, 3, 1, 2, 1,
+	1, 2, 2, 1, 2, 3, 1, 2, 1, 1,
+	2, 3, 3, 4, 3, 3, 3, 1, 2,
 }
 var yyChk = [...]int{
 
 	-1000, -9, -1, -3, -4, -7, -8, -6, -2, -5,
-	-15, -19, -20, -13, -18, 6, 11, 12, 7, -10,
-	-21, -12, -11, 5, 8, 4, -9, -3, -4, -9,
-	-13, 7, -13, -13, -14, 11, 4, -19, -13, -18,
-	-14, -22, 10, 7, 7, 7, 11, 7, 9, -16,
-	-17, 13, 10, 7, 9, -16, 4, 7,
+	-15, -20, -21, -13, -19, 6, 11, 12, 7, -10,
+	-22, -12, -11, 5, 8, 4, -9, -3, -4, -9,
+	-13, 7, -13, -13, -14, 11, 4, -20, -13, -19,
+	-18, -14, -23, 10, 7, 7, 7, 11, 7, 9,
+	-16, -17, 13, 10, 7, -16, 4, 7,
 }
 var yyDef = [...]int{
 
-	0, -2, 1, 3, 4, 5, 6, 7, 22, 28,
-	0, 0, 8, 0, 0, 0, 0, 36, 10, 11,
-	25, 13, 14, 27, 0, 15, 2, 23, 29, 0,
-	0, 9, 0, 0, 0, 0, 18, 37, 12, 26,
-	0, 31, 0, 35, 24, 30, 0, 33, 16, 0,
-	19, 0, 0, 32, 17, 20, 21, 34,
+	0, -2, 1, 3, 4, 5, 6, 7, 23, 29,
+	0, 0, 8, 0, 0, 0, 0, 37, 10, 11,
+	26, 13, 14, 28, 0, 15, 2, 24, 30, 0,
+	0, 9, 0, 0, 0, 0, 19, 38, 12, 27,
+	0, 17, 32, 0, 36, 25, 31, 0, 34, 16,
+	18, 20, 0, 0, 33, 21, 22, 35,
 }
 var yyTok1 = [...]int{
 
@@ -476,200 +477,206 @@ yydefault:
 
 	case 1:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:34
+		//line parser.go.y:36
 		{
 			yyVAL.blocks = []Block{yyDollar[1].block}
 			yylex.(*Lexer).result = yyVAL.blocks
 		}
 	case 2:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser.go.y:39
+		//line parser.go.y:41
 		{
 			yyVAL.blocks = append([]Block{yyDollar[1].block}, yyDollar[2].blocks...)
 			yylex.(*Lexer).result = yyVAL.blocks
 		}
 	case 3:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:46
+		//line parser.go.y:48
 		{
 			yyVAL.block = yyDollar[1].block
 		}
 	case 4:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:50
+		//line parser.go.y:52
 		{
 			yyVAL.block = yyDollar[1].block
 		}
 	case 5:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:54
+		//line parser.go.y:56
 		{
 			yyVAL.block = yyDollar[1].block
 		}
 	case 6:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:58
+		//line parser.go.y:60
 		{
 			yyVAL.block = yyDollar[1].block
 		}
 	case 7:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:62
+		//line parser.go.y:64
 		{
 			yyVAL.block = yyDollar[1].block
 		}
 	case 8:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:68
+		//line parser.go.y:70
 		{
 			yyVAL.block = Line{Inlines: []Inline{}}
 		}
 	case 9:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser.go.y:72
+		//line parser.go.y:74
 		{
 			yyVAL.block = Line{Inlines: yyDollar[1].inlines}
 		}
 	case 11:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:81
+		//line parser.go.y:83
 		{
 			yyVAL.inlines = []Inline{yyDollar[1].inline}
 		}
 	case 12:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser.go.y:85
+		//line parser.go.y:87
 		{
 			yyVAL.inlines = append([]Inline{yyDollar[1].inline}, yyDollar[2].inlines...)
 		}
 	case 15:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:95
+		//line parser.go.y:97
 		{
 			yyVAL.inline = InlineText{Literal: yyDollar[1].token.literal}
 		}
 	case 16:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line parser.go.y:101
+		//line parser.go.y:103
 		{
-			yyVAL.inline = InlineHttp{Url: yyDollar[2].url}
+			yyVAL.inline = InlineHttp{Reference: yyDollar[2].reference}
 		}
 	case 17:
-		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser.go.y:105
+		yyDollar = yyS[yypt-1 : yypt+1]
+		//line parser.go.y:109
 		{
-			yyVAL.inline = InlineHttp{Url: yyDollar[2].url, Options: yyDollar[3].http_options}
+			yyVAL.reference = Reference{Url: yyDollar[1].url}
 		}
 	case 18:
-		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:110
+		yyDollar = yyS[yypt-2 : yypt+1]
+		//line parser.go.y:113
 		{
-			yyVAL.url = yyDollar[1].token.literal
+			yyVAL.reference = Reference{Url: yyDollar[1].url, Options: yyDollar[2].http_options}
 		}
 	case 19:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:116
+		//line parser.go.y:118
+		{
+			yyVAL.url = yyDollar[1].token.literal
+		}
+	case 20:
+		yyDollar = yyS[yypt-1 : yypt+1]
+		//line parser.go.y:124
 		{
 			yyVAL.http_options = []string{yyDollar[1].http_option}
 		}
-	case 20:
+	case 21:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser.go.y:120
+		//line parser.go.y:128
 		{
 			options := yyDollar[2].http_options
 			yyVAL.http_options = append([]string{yyDollar[1].http_option}, options...)
 		}
-	case 21:
+	case 22:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser.go.y:126
+		//line parser.go.y:134
 		{
 			yyVAL.http_option = yyDollar[2].token.literal
 		}
-	case 22:
+	case 23:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:132
+		//line parser.go.y:140
 		{
 			yyVAL.block = UnorderedList{Items: []UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}}
 		}
-	case 23:
+	case 24:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser.go.y:136
+		//line parser.go.y:144
 		{
 			items := yyDollar[2].block.(UnorderedList).Items
 			list := UnorderedList{Items: append([]UnorderedListItem{yyDollar[1].block.(UnorderedListItem)}, items...)}
 			yyVAL.block = list
 		}
-	case 24:
+	case 25:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line parser.go.y:144
+		//line parser.go.y:152
 		{
 			yyVAL.block = UnorderedListItem{Depth: yyDollar[1].depth, Inlines: yyDollar[2].inlines}
 		}
-	case 25:
+	case 26:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:150
+		//line parser.go.y:158
 		{
 			yyVAL.depth = 1
 		}
-	case 26:
+	case 27:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser.go.y:154
+		//line parser.go.y:162
 		{
 			yyVAL.depth = yyDollar[2].depth + 1
 		}
-	case 28:
+	case 29:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:164
+		//line parser.go.y:172
 		{
 			yyVAL.block = OrderedList{Items: []OrderedListItem{yyDollar[1].block.(OrderedListItem)}}
 		}
-	case 29:
+	case 30:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser.go.y:168
+		//line parser.go.y:176
 		{
 			items := yyDollar[2].block.(OrderedList).Items
 			list := OrderedList{Items: append([]OrderedListItem{yyDollar[1].block.(OrderedListItem)}, items...)}
 			yyVAL.block = list
 		}
-	case 30:
+	case 31:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line parser.go.y:176
+		//line parser.go.y:184
 		{
 			yyVAL.block = OrderedListItem{Inlines: yyDollar[2].inlines}
 		}
-	case 31:
+	case 32:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line parser.go.y:182
+		//line parser.go.y:190
 		{
 			yyVAL.block = Quotation{Cite: yyDollar[1].url, Content: yyDollar[2].blocks}
 		}
-	case 32:
+	case 33:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser.go.y:188
+		//line parser.go.y:196
 		{
 			yyVAL.url = yyDollar[2].url
 		}
-	case 33:
+	case 34:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line parser.go.y:192
+		//line parser.go.y:200
 		{
 			yyVAL.url = ""
 		}
-	case 35:
+	case 36:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line parser.go.y:201
+		//line parser.go.y:209
 		{
 			yyVAL.block = Heading{Level: yyDollar[1].depth, Content: yyDollar[2].inlines}
 		}
-	case 36:
+	case 37:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser.go.y:207
+		//line parser.go.y:215
 		{
 			yyVAL.depth = 1
 		}
-	case 37:
+	case 38:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser.go.y:211
+		//line parser.go.y:219
 		{
 			yyVAL.depth = yyDollar[2].depth + 1
 		}

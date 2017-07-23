@@ -69,7 +69,11 @@ func TestParser_Parse(t *testing.T) {
 			result: []Block{
 				Line{
 					Inlines: []Inline{
-						InlineHttp{Url: "http://example.com/"},
+						InlineHttp{
+							Reference: Reference{
+								Url: "http://example.com/",
+							},
+						},
 					},
 				},
 				Line{
@@ -86,8 +90,10 @@ func TestParser_Parse(t *testing.T) {
 				Line{
 					Inlines: []Inline{
 						InlineHttp{
-							Url:     "http://example.com/",
-							Options: []string{"title=example"},
+							Reference: Reference{
+								Url:     "http://example.com/",
+								Options: []string{"title=example"},
+							},
 						},
 					},
 				},
@@ -158,7 +164,11 @@ func TestParser_Parse(t *testing.T) {
 						UnorderedListItem{
 							Depth: 1,
 							Inlines: []Inline{
-								InlineHttp{Url: "http://example.com/"},
+								InlineHttp{
+									Reference: Reference{
+										Url: "http://example.com/",
+									},
+								},
 							},
 						},
 					},

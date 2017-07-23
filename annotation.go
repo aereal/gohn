@@ -40,6 +40,10 @@ type InlineText struct {
 }
 
 type InlineHttp struct {
+	Reference Reference
+}
+
+type Reference struct {
 	Url     string
 	Options HttpOptions
 }
