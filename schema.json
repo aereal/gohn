@@ -12,19 +12,19 @@
   },
   "definitions": {
     "node": {
-      "enum": [
+      "anyOf": [
         { "$ref": "#/definitions/blockNode" },
         { "$ref": "#/definitions/inlineNode" }
       ]
     },
     "inlineNode": {
-      "enum": [
+      "anyOf": [
         { "$ref": "#/definitions/textNode" },
         { "$ref": "#/definitions/httpNode" }
       ]
     },
     "blockNode": {
-      "enum": [
+      "anyOf": [
         { "$ref": "#/definitions/lineNode" },
         { "$ref": "#/definitions/headingNode" },
         { "$ref": "#/definitions/unorderedListNode" },
