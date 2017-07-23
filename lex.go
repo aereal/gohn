@@ -18,6 +18,7 @@ var symbolTables = map[string]int{
 	"<":              LT,
 	">":              GT,
 	"*":              HEADING_MARKER,
+	":":              COLON,
 }
 
 type Token struct {
@@ -47,6 +48,8 @@ func (t Token) Name() string {
 		return "HEADING_MARKER"
 	case EOF:
 		return "EOF"
+	case COLON:
+		return "COLON"
 	default:
 		return "UNKNOWN"
 	}
@@ -54,8 +57,10 @@ func (t Token) Name() string {
 
 type Lexer struct {
 	scanner.Scanner
-	result []Block
-	err    *ParseError
+	result    []Block
+	err       *ParseError
+	inHttp    bool
+	seenColon bool
 }
 
 type ParseError struct {
@@ -68,15 +73,6 @@ func (e *ParseError) Error() string {
 	return e.Message
 }
 
-func isIdent(ch rune, size int) bool {
-	return unicode.IsGraphic(ch) && !isReserved(ch) && !unicode.IsSpace(ch)
-}
-
-func isReserved(ch rune) bool {
-	_, ok := symbolTables[string(ch)]
-	return ok
-}
-
 func isWhitespace(ch rune) bool {
 	return unicode.IsSpace(ch) && ch != rune(NEW_LINE)
 }
@@ -85,9 +81,34 @@ func NewLexer(in io.Reader) *Lexer {
 	l := new(Lexer)
 	l.Init(in)
 	l.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanStrings | scanner.ScanComments | scanner.SkipComments
-	l.IsIdentRune = isIdent
+	l.IsIdentRune = l.isIdent
 	l.Whitespace = 1<<' ' | 1<<'\t'
+	l.inHttp = false
+	l.seenColon = false
 	return l
+}
+
+func (l *Lexer) isIdent(ch rune, size int) bool {
+	return unicode.IsGraphic(ch) && !l.isReserved(ch) && !unicode.IsSpace(ch)
+}
+
+func (l *Lexer) isReserved(ch rune) bool {
+	token, ok := symbolTables[string(ch)]
+	if ok {
+		switch token {
+		case COLON:
+			if !l.seenColon {
+				l.seenColon = true
+				return false // maybe part of URL
+			} else {
+				return true
+			}
+		default:
+			return true
+		}
+	} else {
+		return false
+	}
 }
 
 func (l *Lexer) skipBlank() {
@@ -99,10 +120,17 @@ func (l *Lexer) skipBlank() {
 func (l *Lexer) Lex(lval *yySymType) int {
 	l.skipBlank()
 	ch := l.Peek()
-	if isReserved(ch) {
-		_ = l.Next()
+	if l.isReserved(ch) {
 		s := string(ch)
 		token := symbolTables[s]
+		if token == LBRACKET {
+			l.inHttp = true
+			l.seenColon = false // reset
+		} else if token == RBRACKET {
+			l.inHttp = false
+			l.seenColon = false // reset
+		}
+		_ = l.Next()
 		lval.token = Token{token: token, literal: s}
 		return token
 	} else {

@@ -10,16 +10,22 @@ package main
   inline Inline
   inlines []Inline
   url string
+  http_option string
+  http_options HttpOptions
+  reference Reference
   depth int
 }
 
 %token<token> TEXT
-%token UNORDERED_LIST_MARKER ORDERED_LIST_MARKER CR LBRACKET RBRACKET LT GT HEADING_MARKER
+%token UNORDERED_LIST_MARKER ORDERED_LIST_MARKER CR LBRACKET RBRACKET LT GT HEADING_MARKER COLON
 %type<block> block unordered_list_item unordered_list ordered_list ordered_list_item line quotation heading
 %type<blocks> blocks
 %type<inline> inline inline_text inline_http
 %type<inlines> inlines
-%type<url> url quotation_prefix
+%type<url> url
+%type<http_options> http_options
+%type<http_option> http_option
+%type<reference> reference quotation_prefix
 %type<depth> unordered_list_markers
 %type<depth> heading_prefix
 
@@ -93,15 +99,41 @@ inline_text:
       }
 
 inline_http:
-           LBRACKET url RBRACKET
+           LBRACKET reference RBRACKET
            {
-            $$ = InlineHttp{Url: $2}
+            $$ = InlineHttp{Reference: $2}
            }
+
+reference:
+  url
+  {
+    $$ = Reference{Url: $1}
+  }
+  | url http_options
+  {
+    $$ = Reference{Url: $1, Options: $2}
+  }
 
 url: TEXT
    {
     $$ = $1.literal
    }
+
+http_options:
+  http_option
+  {
+    $$ = []string{$1}
+  }
+  | http_option http_options
+  {
+    options := $2
+    $$ = append([]string{$1}, options...)
+  }
+
+http_option: COLON TEXT
+  {
+    $$ = $2.literal
+  }
 
 unordered_list:
               unordered_list_item
@@ -160,13 +192,13 @@ quotation:
          }
 
 quotation_prefix:
-                GT url GT CR
+                GT reference GT CR
                 {
                   $$ = $2
                 }
                 | GT GT CR
                 {
-                  $$ = ""
+                  $$ = Reference{}
                 }
 
 quotation_suffix:

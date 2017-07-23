@@ -40,9 +40,11 @@ func (q Quotation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Name    string
 		Content []Block
+		Cite    Reference
 	}{
 		Name:    "Quotation",
 		Content: q.Content,
+		Cite:    q.Cite,
 	})
 }
 
@@ -70,10 +72,12 @@ func (it InlineText) MarshalJSON() ([]byte, error) {
 
 func (ih InlineHttp) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
-		Name string
-		Url  string
+		Name    string
+		Url     string
+		Options HttpOptions
 	}{
-		Name: "InlineHttp",
-		Url:  ih.Url,
+		Name:    "InlineHttp",
+		Url:     ih.Reference.Url,
+		Options: ih.Reference.Options,
 	})
 }

@@ -26,7 +26,7 @@ type Line struct {
 }
 
 type Quotation struct {
-	Cite    string
+	Cite    Reference
 	Content []Block
 }
 
@@ -40,5 +40,12 @@ type InlineText struct {
 }
 
 type InlineHttp struct {
-	Url string
+	Reference Reference
 }
+
+type Reference struct {
+	Url     string
+	Options HttpOptions
+}
+
+type HttpOptions []string

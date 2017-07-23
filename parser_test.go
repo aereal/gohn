@@ -69,7 +69,32 @@ func TestParser_Parse(t *testing.T) {
 			result: []Block{
 				Line{
 					Inlines: []Inline{
-						InlineHttp{Url: "http://example.com/"},
+						InlineHttp{
+							Reference: Reference{
+								Url: "http://example.com/",
+							},
+						},
+					},
+				},
+				Line{
+					Inlines: []Inline{
+						InlineText{Literal: "弟"},
+					},
+				},
+			},
+		},
+		{
+			description: "HTTP annotation with :title option",
+			input:       "[http://example.com/:title=example]\n弟\n",
+			result: []Block{
+				Line{
+					Inlines: []Inline{
+						InlineHttp{
+							Reference: Reference{
+								Url:     "http://example.com/",
+								Options: []string{"title=example"},
+							},
+						},
 					},
 				},
 				Line{
@@ -139,7 +164,11 @@ func TestParser_Parse(t *testing.T) {
 						UnorderedListItem{
 							Depth: 1,
 							Inlines: []Inline{
-								InlineHttp{Url: "http://example.com/"},
+								InlineHttp{
+									Reference: Reference{
+										Url: "http://example.com/",
+									},
+								},
 							},
 						},
 					},
@@ -182,7 +211,9 @@ func TestParser_Parse(t *testing.T) {
 			input:       ">http://example.com/>\na\n- a\n- b\n<<\n",
 			result: []Block{
 				Quotation{
-					Cite: "http://example.com/",
+					Cite: Reference{
+						Url: "http://example.com/",
+					},
 					Content: []Block{
 						Line{
 							Inlines: []Inline{
