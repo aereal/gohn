@@ -40,9 +40,11 @@ func (q Quotation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Name    string
 		Content []Block
+		Cite    Reference
 	}{
 		Name:    "Quotation",
 		Content: q.Content,
+		Cite:    q.Cite,
 	})
 }
 

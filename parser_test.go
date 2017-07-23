@@ -211,7 +211,9 @@ func TestParser_Parse(t *testing.T) {
 			input:       ">http://example.com/>\na\n- a\n- b\n<<\n",
 			result: []Block{
 				Quotation{
-					Cite: "http://example.com/",
+					Cite: Reference{
+						Url: "http://example.com/",
+					},
 					Content: []Block{
 						Line{
 							Inlines: []Inline{

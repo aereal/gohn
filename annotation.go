@@ -26,7 +26,7 @@ type Line struct {
 }
 
 type Quotation struct {
-	Cite    string
+	Cite    Reference
 	Content []Block
 }
 

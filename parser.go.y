@@ -22,10 +22,10 @@ package main
 %type<blocks> blocks
 %type<inline> inline inline_text inline_http
 %type<inlines> inlines
-%type<url> url quotation_prefix
+%type<url> url
 %type<http_options> http_options
 %type<http_option> http_option
-%type<reference> reference
+%type<reference> reference quotation_prefix
 %type<depth> unordered_list_markers
 %type<depth> heading_prefix
 
@@ -192,13 +192,13 @@ quotation:
          }
 
 quotation_prefix:
-                GT url GT CR
+                GT reference GT CR
                 {
                   $$ = $2
                 }
                 | GT GT CR
                 {
-                  $$ = ""
+                  $$ = Reference{}
                 }
 
 quotation_suffix:
