@@ -340,7 +340,7 @@ func TestParser_Parse(t *testing.T) {
 			t.Errorf("! #%d %v: Failed to parse: %#v", i, expect.description, err)
 			continue
 		}
-		ok, msg := matchResult(expect.result, actual)
+		ok, msg := matchResult(expect.result, actual.Nodes)
 		if !ok {
 			t.Errorf("! #%d %v: %v", i, expect.description, msg)
 			continue
