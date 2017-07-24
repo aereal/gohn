@@ -129,7 +129,10 @@
           "const": "QUOTATION"
         },
         "cite": {
-          "$ref": "#/definitions/reference"
+          "anyOf": [
+            { "type": "null" },
+            { "$ref": "#/definitions/reference" }
+          ]
         },
         "nodes": {
           "type": "array",
