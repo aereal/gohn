@@ -35,6 +35,9 @@
     "lineNode": {
       "type": "object",
       "properties": {
+        "kind": {
+          "const": "LINE"
+        },
         "nodes": {
           "type": "array",
           "items": { "$ref": "#/definitions/inlineNode" }
@@ -45,6 +48,9 @@
     "headingNode": {
       "type": "object",
       "properties": {
+        "kind": {
+          "const": "HEADING"
+        },
         "nodes": {
           "type": "array",
           "items": { "$ref": "#/definitions/inlineNode" }
@@ -59,6 +65,9 @@
     "unorderedListNode": {
       "type": "object",
       "properties": {
+        "kind": {
+          "const": "UNORDERED_LIST"
+        },
         "items": {
           "type": "array",
           "items": { "$ref": "#/definitions/unorderedListItemNode" }
@@ -69,6 +78,9 @@
     "unorderedListItemNode": {
       "type": "object",
       "properties": {
+        "kind": {
+          "const": "UNORDERED_LIST_ITEM"
+        },
         "nodes": {
           "type": "array",
           "items": { "$ref": "#/definitions/inlineNode" }
@@ -83,6 +95,9 @@
     "orderedListNode": {
       "type": "object",
       "properties": {
+        "kind": {
+          "const": "ORDERED_LIST"
+        },
         "items": {
           "type": "array",
           "items": { "$ref": "#/definitions/orderedListItemNode" }
@@ -93,6 +108,9 @@
     "orderedListItemNode": {
       "type": "object",
       "properties": {
+        "kind": {
+          "const": "ORDERED_LIST_ITEM"
+        },
         "nodes": {
           "type": "array",
           "items": { "$ref": "#/definitions/inlineNode" }
@@ -107,6 +125,9 @@
     "quotationNode": {
       "type": "object",
       "properties": {
+        "kind": {
+          "const": "QUOTATION"
+        },
         "cite": {
           "$ref": "#/definitions/reference"
         },
@@ -119,6 +140,9 @@
     "httpNode": {
       "type": "object",
       "properties": {
+        "kind": {
+          "const": "HTTP"
+        },
         "reference": { "$ref": "#/definitions/reference" }
       },
       "required": ["reference"]
@@ -126,6 +150,9 @@
     "textNode": {
       "type": "object",
       "properties": {
+        "kind": {
+          "const": "TEXT"
+        },
         "value": {
           "type": "string"
         }
