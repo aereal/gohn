@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/aereal/go-text-hatena/parser"
 )
 
 const Name string = "text-hatena"
@@ -22,7 +24,7 @@ func (cli *CLI) Run(args []string) int {
 		return 1
 	}
 
-	if result, err := Parse(os.Stdin); err != nil {
+	if result, err := parser.Parse(os.Stdin); err != nil {
 		fmt.Printf("! Error: %#v\n", err)
 		return 1
 	} else {

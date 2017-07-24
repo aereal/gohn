@@ -1,8 +1,8 @@
-build: parser.go
+build: parser/parser.go
 	go build ./...
 
-parser.go: parser.go.y
-	goyacc -o parser.go parser.go.y
+parser/parser.go: parser/parser.go.y
+	goyacc -o parser/parser.go parser/parser.go.y
 
-test: parser.go
+test: parser/parser.go
 	go test -v ./...
