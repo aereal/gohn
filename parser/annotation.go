@@ -1,6 +1,9 @@
 package parser
 
-// Block is ...
+type Document struct {
+	Nodes []Block
+}
+
 type Block interface{}
 
 type Inline interface{}

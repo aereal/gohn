@@ -152,10 +152,11 @@ func (l *Lexer) Error(e string) {
 	}
 }
 
-func Parse(src io.Reader) ([]Block, error) {
+func Parse(src io.Reader) (*Document, error) {
 	lex := NewLexer(src)
 	if ok := yyParse(lex); ok == 0 {
-		return lex.result, nil
+		doc := &Document{Nodes: lex.result}
+		return doc, nil
 	} else {
 		return nil, lex.err
 	}
