@@ -4,6 +4,10 @@ go-text-hatena is a parser for Hatena Notation (a.k.a. はてな記法).
 
 **:warning: This software is like a sketch. API or any design may change without notice.**
 
+## AST definition
+
+See [schema.json](schema.json)
+
 ## Background
 
 Why do we implement new Hatena Notation parser although there are several implementations?
