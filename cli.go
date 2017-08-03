@@ -7,7 +7,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/aereal/go-text-hatena/parser"
+	"github.com/aereal/gohn/parser"
 )
 
 const Name string = "text-hatena"
